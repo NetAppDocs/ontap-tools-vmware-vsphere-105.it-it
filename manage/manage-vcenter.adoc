@@ -1,0 +1,129 @@
+---
+permalink: manage/manage-vcenter.html 
+sidebar: sidebar 
+keywords:  
+summary: vCenters sono piattaforme di gestione centralizzate che ti permettono di controllare host, macchine virtuali e backend di storage. 
+---
+= Gestisci le istanze del server vCenter negli strumenti ONTAP
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Le istanze di vCenter Server sono piattaforme di gestione centralizzate che ti permettono di controllare host, macchine virtuali e backend di storage.
+
+
+
+[[dissociate-storage-backends-with-the-vcenter-server-instance]]
+== Dissocia i backend di storage con l'istanza del server vCenter
+
+La pagina di elenco dei server vCenter mostra il numero di backend di storage associati. Ogni istanza del server vCenter offre la possibilità di associarsi o dissociarsi da un backend di storage.
+
+.Passaggi
+. Avvia ONTAP tools Manager da un browser web: `\https://<ONTAPtoolsIP>:8443/virtualization/ui/`
+. Accedi con le credenziali di amministratore degli ONTAP tools for VMware vSphere che hai fornito durante la distribuzione.
+. Seleziona l'istanza del server vCenter richiesta dalla barra laterale.
+. Seleziona i puntini di sospensione verticali accanto al server vCenter che vuoi associare o dissociare ai backend di storage.
+. Seleziona *Dissocia storage backend*.
+
+
+
+
+[[modify-a-vcenter-server-instance]]
+== Modifica un'istanza del server vCenter
+
+Segui i passaggi seguenti per modificare un'istanza del server vCenter.
+
+. Avvia ONTAP tools Manager da un browser web: `\https://<ONTAPtoolsIP>:8443/virtualization/ui/`
+. Accedi con le credenziali di amministratore degli ONTAP tools for VMware vSphere che hai fornito durante la distribuzione.
+. Seleziona l'istanza del server vCenter appropriata dalla barra laterale
+. Seleziona i puntini di sospensione verticali accanto al vCenter Server che vuoi modificare e seleziona *Modifica*.
+. Nella finestra *Modifica vCenter*, inserisci nome utente, password e dettagli della porta.
+. Carica il certificato e seleziona *Modifica*.
+
+
+
+
+[[remove-a-vcenter-server-instance]]
+== Rimuovi un'istanza del server vCenter
+
+Rimuovi tutti i backend di storage dal vCenter Server prima di rimuoverlo.
+
+. Avvia ONTAP tools Manager da un browser web: `\https://<ONTAPtoolsIP>:8443/virtualization/ui/`
+. Accedi con le credenziali di amministratore degli ONTAP tools for VMware vSphere che hai fornito durante la distribuzione.
+. Seleziona le istanze del server vCenter applicabili dalla barra laterale
+. Seleziona i puntini di sospensione verticali accanto al vCenter Server che vuoi rimuovere e seleziona *Rimuovi*.
++
+
+NOTE: Dopo che rimuovi le istanze del server vCenter, non saranno più gestite dall'applicazione.
+
+
+
+Quando rimuovi le istanze di vCenter Server negli ONTAP tools, vengono eseguite automaticamente le seguenti azioni:
+
+* Il plug-in non è registrato.
+* I privilegi e i ruoli dei plug-in sono stati rimossi.
+
+
+
+
+[[renew-vcenter-server-certificate]]
+== Rinnova il certificato del server vCenter
+
+ONTAP tools ti avvisa quando il certificato vCenter sta per scadere o è già scaduto. Dopo aver rinnovato il certificato vCenter, carica il nuovo certificato su ONTAP tools seguendo questi passaggi:
+
+. Accedi alla shell di diagnostica remota degli ONTAP tools.
+. Ottieni il certificato vCenter rinnovato dalla shell diagnostica:
++
+[listing]
+----
+echo | openssl s_client connect <vcenter>:443 2>&1 | sed -n '/-BEGIN CERTIFICATE/,/END CERTIFICATE/p'
+----
+. Assicurati che il certificato sia in formato ASCII Base 64 e includa le righe di inizio e fine, ad esempio:
++
+[listing]
+----
+---{}BEGIN CERTIFICATE{}---
+MIIFUzCCA7ugAwIBAgIJANOgLapcl5oSMA0GCSqGSIb3DQEBCwUAMIGJMQwwCgYD
+VQQDDAN2YzExFDASBgoJkiaJk/IsZAEZFgRkZW1vMRUwEwYKCZImiZPyLGQBGRYF
+bG9jYWwxCzAJBgNVBAYTAlVTMRMwEQYDVQQIDApDYWxpZm9ybmlhMRwwGgYDVQQK
+DBN2YzEuZGVtby5uZXRhcHAuY29tMQwwCgYDVQQLDANMT0QwHhcNMjQwNDA1MTgw
+NTE4WhcNMjYwNDA1MTgwNTE4WjBzMRwwGgYDVQQDDBN2YzEuZGVtby5uZXRhcHAu
+Y29tMQswCQYDVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTESMBAGA1UEBwwJ
+UGFsbyBBbHRvMQ8wDQYDVQQKDAZOZXRBcHAxDDAKBgNVBAsMA0xPRDCCAaIwDQYJ
+KoZIhvcNAQEBBQADggGPADCCAYoCggGBALU8OCWMtA2gvIC/OTw/7xucvPVuM+b8
+DhzvNpQ2phjfr6ctEhbntPpqPdu+t2CKK7l0mzg3D9cJ/rvMvdDDXr0tgaD1oi2u
+ZDW0CaF0QhLOpNfRXMoogBZ66csEhViAy3CHTcOse770mA/PyoHgrCPZngVlZIiQ
+TIWpdQMbEEzFIkrLfC70UW2MzfublrsH7Dn/kOu/iCSlVJWixKf7SmZtVQ5ZxBTD
+UlJSiqoX1eRXGyunArEvrIpOY9kkKXUElm3hGnk/ZmiuBJ+HqUYqYW+H+7vE3lKa
+6NEqDX+tZotxTx2bXMjeiIWU30ZbshgeXlIG9qc49clBoC9iGjavhctOcaXg/W3h
+dLKK5ds3rpRERgMg6VMkrfiqAJuiq+b3sTvXMAul/3hL7hz5QABAE/hP4ZvIHV02
+WWDQRLiuVFAcDAyvCrO9Irx0Gk1RyRShKYakdWxZ3hhMdLuGq0yvRXqo1Ib94zwO
+JfBJHjFToA/GqwromZgiTzJkKq5xbN8MFwIDAQABo4HSMIHPMAsGA1UdDwQEAwIF
+4DA7BgNVHREENDAygRVlbWFpbEBkZW1vLm5ldGFwcC5jb22HBMCoAB+CE3ZjMS5k
+ZW1vLm5ldGFwcC5jb20wHQYDVR0OBBYEFJ0V0zY+JRpFrEt31ovAY4BLFXmAMB8G
+A1UdIwQYMBaAFENf6fRxWF3OJQNTPIdUpK6kjA78MEMGCCsGAQUFBwEBBDcwNTAz
+BggrBgEFBQcwAoYnaHR0cHM6Ly92YzEuZGVtby5uZXRhcHAuY29tL2FmZC92ZWNz
+L2NhMA0GCSqGSIb3DQEBCwUAA4IBgQBaDfk7GBM4vmhzYCqGrr6KB+h3qeTJ+Y0Y
+5nIPRP1HucawDQ8QTay605ddJ8gFGoxkOQDn9tdXWXGjnTRFOT8R+Hw/nUfVSiDP
+sYienb16copzUNwtqh+m9Ifow74Gf+ulRzEC0EAVO1X/nTEYH6NKM6Wy7y7F8g5J
+lrpM3JY90ZChMqHO3Av/88rbErfQ/gU1brJ3u9Gks4e20Z7Ff312ZKhWRuJDlN2Z
+0tc/gp90N9GxaVvELovq/pdjaZ8xiXCxa6piicrJd9WnqMH1gmxP2PIBDxMDBWBG
+gwsfs5H7VG9MJYks6lViNsGclo0EwEdF0MfoB3JtsWpPWq6+jBua0Jm7/aFCU+Ht
+mykr0gaV7muegoiBQuDma4EkAI31D7ZlUgJQaw157NTk4RW3TFcbtViBHJkM54Hr
+iVm0cl+2BZNi/QTMh/MkWV2dYXJ3NuNlqqfzFY+bUfkzkR4SneMk0HX3joNNYDJv
+siO7bL+k/Pxql27NVIhuCoVJAlcI7ak=
+---{}END CERTIFICATE{}---
+----
+. Copia l'output e salvalo come file di testo con un' `.pem`estensione sul tuo desktop.
+. Avvia ONTAP tools Manager da un browser web: `\https://<ONTAPtoolsIP>:8443/virtualization/ui/`
+. Accedi con le credenziali di amministratore degli ONTAP tools for VMware vSphere che hai fornito durante la distribuzione.
+. Seleziona l'istanza del server vCenter appropriata dalla barra laterale
+. Seleziona i puntini di sospensione verticali accanto al vCenter Server che vuoi modificare e seleziona *Modifica*.
+. Nella finestra *Modifica vCenter*, inserisci nome utente, password e dettagli della porta.
+. Carica il certificato e seleziona *Modifica*.
+
+
+.Informazioni correlate
+link:../manage/configure-remote-diagnostic-access.html["Configura l'accesso diagnostico remoto"]

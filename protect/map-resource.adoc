@@ -1,0 +1,37 @@
+---
+permalink: protect/map-resource.html 
+sidebar: sidebar 
+keywords:  
+summary: 'Dovresti mappare le tue risorse sul sito protetto e sul sito di ripristino in modo che le macchine virtuali siano configurate per eseguire il failover su un gruppo di host o sull"altro.' 
+---
+= Configurare le mappature delle risorse negli ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dovresti mappare le tue risorse sul sito protetto e sul sito di ripristino in modo che le macchine virtuali siano configurate per eseguire il failover su un gruppo di host o sull'altro.
+
+.Prima di iniziare
+Dovresti aver collegato i siti protetto e di recovery.
+
+
+NOTE: In VMware Live Site Recovery, le risorse possono essere pool di risorse, host ESXi o vSphere cluster.
+
+.Passaggi
+. Accedi al vCenter Server e seleziona *Ripristino del sito* > *Siti*.
+. Seleziona il tuo sito protetto e seleziona *Gestisci*.
+. Seleziona *Mappature risorse* > *Nuovo* nella scheda Gestisci per creare una nuova mappatura delle risorse.
+. Nella procedura guidata Crea mappatura risorse, esegui le seguenti operazioni:
++
+.. Seleziona *Prepara automaticamente le mappature per le risorse con nomi corrispondenti* e seleziona *Avanti*.
+.. Seleziona gli oggetti del data center necessari per i siti protetti e di recovery e seleziona *Aggiungi mappature*.
+.. Seleziona *Avanti* dopo che le mappature sono state create con successo.
+.. Seleziona l'oggetto utilizzato in precedenza per creare la mappatura inversa e poi seleziona *Finish*.
+
+
+
+
+.Risultato
+La pagina Mappatura risorse visualizza le risorse del sito protetto e le risorse del sito di ripristino. È possibile seguire gli stessi passaggi per le altre risorse presenti nell'ambiente.

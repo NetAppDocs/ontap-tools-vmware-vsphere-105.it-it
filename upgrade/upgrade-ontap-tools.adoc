@@ -1,0 +1,107 @@
+---
+permalink: upgrade/upgrade-ontap-tools.html 
+sidebar: sidebar 
+keywords: upgrade 
+summary: 'L"aggiornamento è supportato sia per le implementazioni HA che per quelle non HA.' 
+---
+= Aggiorna da ONTAP tools for VMware vSphere 10.x a 10.5
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Puoi eseguire l'aggiornamento da ONTAP tools for VMware vSphere 10.3 o 10.4 a 10.5. Tuttavia, per eseguire l'aggiornamento da ONTAP tools 10.0, 10.1 o 10.2 a 10.5, devi prima aggiornare a 10.3 o 10.4 prima di procedere a 10.5.
+
+[NOTE]
+====
+* Per i sistemi ASA r2, assicurarsi di aggiornare ONTAP tools for VMware vSphere alla versione 10.5 e ONTAP alla versione 9.16.1, prima di configurare ulteriori storage availability zones (SAZ).
+* Se l'upgrade da ONTAP tools for VMware vSphere 10.3 o 10.4 a 10.5 non va a buon fine, non puoi eseguire il rollback. Usa un basso RPO o il ripristino tramite snapshot per ripristinare la configurazione. Per ONTAP tools for VMware vSphere 10.2 e versioni precedenti, usa zero-RPO per ripristinare la configurazione.
+
+
+====
+.Prima di iniziare
+* Assicurati che tutti i nodi siano attivi.
+* Assicurati che il certificato di sistema ONTAP e i certificati vCenter integrati siano validi per almeno 5 giorni. Se i certificati scadono prima, l'aggiornamento fallisce.
+* Assicurati di avere un quinto disco con una capacità di 100 GB su tutti i nodi.
+* Verifica che la configurazione del nodo corrisponda alle specifiche riportate nella tabella sottostante.
+
+
+|===
+| Tipo di implementazione | CPU (Core) per nodo | Memoria (GB) per nodo | Spazio su disco (GB) per nodo | CPU totale (Core) | Memoria (GB) | Spazio totale su disco (GB) 
+
+
+| Non-HA Piccolo | 9 | 18 | 350 | 9 | 18 | 350 
+
+
+| Non-HA medio | 13 | 26 | 350 | 13 | 26 | 350 
+
+
+| HA Small | 9 | 18 | 350 | 27 | 54 | 1050 
+
+
+| HA Medium | 13 | 26 | 350 | 39 | 78 | 1050 
+
+
+| HA Large | 17 | 34 | 350 | 51 | 102 | 1050 
+|===
+* Assicurati che la funzionalità hot plug-in per CPU e RAM sia abilitata.
+* Abilita il backup con RPO basso e assicurati che almeno un backup sia visibile nell'interfaccia del vCenter Client. Scarica la cartella di backup prima dell'upgrade.
+* Si consiglia un backup con RPO basso. Tuttavia, nelle implementazioni non HA, puoi creare uno snapshot quiescente della macchina virtuale degli ONTAP tools prima dell'aggiornamento.
++
+Consulta link:../manage/backup-settings.html["Modifica le impostazioni di backup"] e link:../manage/recover-backup.html["Ripristina la configurazione degli ONTAP tools"] per maggiori informazioni su backup e ripristino.
+
+
+
+.Passaggi
+. Carica l'ISO di aggiornamento di ONTAP tools for VMware vSphere nell'archivio di contenuti.
+. Nella pagina della VM principale, seleziona *Azioni* > *Modifica impostazioni*. Per identificare il nome della VM principale:
++
+.. Abilita la shell di diagnostica su qualsiasi nodo
+.. Eseguire il seguente comando:
+`grep sourceHost /opt/netapp/meta/ansible_vars.yaml`
+
+
+. Nella finestra delle impostazioni di modifica, seleziona il file *ISO dell'archivio di contenuti* nel campo *unità CD/DVD*.
+. Seleziona il file ISO, seleziona la casella *Connesso* per il campo *CD/DVD drive* e fai clic su *OK*.
+. Dal vCenter Server, apri una console per ONTAP tools.
+. Accedi come utente di manutenzione.
+. Digita *2* per selezionare il menu *Configurazione di sistema*.
+. Digita *6* per selezionare l'opzione *Upgrade*.
+. Fornisci le credenziali vCenter quando richiesto. Questa è l'istanza vCenter in cui è ospitato ONTAP tools.
++
+Se si utilizzano gli strumenti ONTAP in una topologia a due vCenter Server, in cui l'appliance è ospitata in un'istanza vCenter e ne gestisce un'altra, è possibile assegnare un ruolo con restrizioni per l'istanza vCenter che ospita gli strumenti ONTAP. È possibile creare un utente e un ruolo vCenter dedicati con solo le autorizzazioni necessarie per la distribuzione del modello OVF. Per dettagli, consultare i ruoli elencati in link:../concepts/rbac-vcenter-use.html#vsphere-object-hierarchy["Ruoli inclusi con ONTAP tools for VMware vSphere 10"].
+
++
+Per l'istanza vCenter che verrà gestita da ONTAP tools, assicurati che l'account utente vCenter abbia i privilegi di amministratore.
+
++
+Durante l'aggiornamento, se a uno qualsiasi dei certificati backend di storage integrati mancano le voci Subject Alternative Name (SAN), riceverai un messaggio che indica il SAN mancante. Se scegli di procedere senza convalidare il SAN, l'aggiornamento continuerà, ma questa scelta non è consigliata a causa dei potenziali rischi per la sicurezza.
+
+. Quando esegui l'aggiornamento, le seguenti azioni vengono eseguite automaticamente:
++
+.. Il certificato gateway viene rinnovato con un periodo di validità di 1 anno. Quando rimuovi il precedente adattatore SRA e carichi il nuovo adattatore 10.5, la validità del certificato SRA passa da 10 anni a 1 anno.
+.. Il plug-in remoto è stato aggiornato
+.. I certificati di ONTAP e del server vCenter vengono convalidati e aggiunti agli ONTAP tools
+.. Il backup è abilitato
+
+
+
+
+.Cosa c'è dopo
+Dopo l'aggiornamento a ONTAP tools for VMware vSphere 10.5:
+
+* Monitora gli avvisi di sistema e pianifica di rinnovare il certificato gateway prima che scada tra un anno.
+* Rimuovi l'adattatore SRA di ONTAP tools 10.4 o 10.3 e carica il file tar dell'adattatore SRA 10.5.
+* Esegui il comando di installazione dopo aver caricato il file tar dell'adattatore SRA. Poi, esegui una nuova scansione degli adattatori SRA per aggiornare la pagina Adattatori di replica dello storage di VMware Site Recovery.
+
+
+Dopo l'aggiornamento potrai:
+
+* Disabilita i servizi dall'interfaccia utente del manager
+* Passa da una configurazione non HA a una configurazione HA
+* Scala una configurazione piccola non HA a una media non HA, oppure a una configurazione media o grande HA.
+
+
+.Informazioni correlate
+link:../migrate/migrate-to-latest-ontaptools.html["Migra dagli ONTAP tools for VMware vSphere 9.xx alla versione 10.5"]

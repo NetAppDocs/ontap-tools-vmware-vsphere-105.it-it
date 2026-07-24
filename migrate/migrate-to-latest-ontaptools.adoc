@@ -1,0 +1,29 @@
+---
+permalink: migrate/migrate-to-latest-ontaptools.html 
+sidebar: sidebar 
+keywords: migrate 
+summary: Durante la migrazione dei dati di storage, i backend di storage vengono integrati manualmente tramite API REST. Durante la migrazione dei dati di VASA Provider, i dati vengono esportati dal database Derby esistente e importati nel database MongoDB. 
+---
+= Migra dagli ONTAP tools for VMware vSphere 9.xx alla versione 10.5
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Lo spostamento della configurazione di NetApp ONTAP tools for VMware vSphere dalla versione 9.xx alla 10.5 richiede un processo di migrazione a causa dei significativi aggiornamenti e miglioramenti del prodotto tra le versioni.
+
+Puoi migrare da ONTAP tools for VMware vSphere 9.12D1, 9.13D2 e 9.13P2 a ONTAP tools for VMware vSphere 10.5.
+
+Se nella configurazione sono presenti datastore NFS e VMFS e non sono presenti datastore vVols, è sufficiente disinstallare ONTAP tools 9.xx e distribuire ONTAP tools 10.5. Tuttavia, se la configurazione include datastore vVols, è necessario eseguire una procedura di migrazione del VASA Provider e dell'SRA.
+
+La tabella seguente illustra il processo di migrazione in questi due diversi scenari.
+
+|===
+| *Se la configurazione prevede datastore vVols* | *Se la configurazione contiene solo datastore NFS e VMFS* 
+
+
+| Passaggi: 1. link:../migrate/sra-vasa-migration.html["Migra il provider VASA"] 2. https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/8-0/vsphere-storage-8-0/storage-policy-based-management-in-vsphere/creating-and-managing-vsphere-storage-policies.html["Crea criteri di archiviazione delle macchine virtuali"] | Passaggi: 1. Rimuovi ONTAP tools 9.xx dal tuo ambiente. Fare riferimento a https://kb.netapp.com/data-mgmt/OTV/VSC_Kbs/OTV_How_to_remove_OTV_9_12_from_your_environment["Come rimuovere OTV 9.xx dal tuo ambiente"] NetApp articolo della Knowledge Base. 2. link:../deploy/quick-start.html["Distribuisci e configura ONTAP tools for VMware vSphere 10.5"] 3. link:../migrate/sra-vasa-migration.html["Aggiorna l'SRA"] 4. https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/8-0/vsphere-storage-8-0/storage-policy-based-management-in-vsphere/creating-and-managing-vsphere-storage-policies.html["Crea criteri di archiviazione delle macchine virtuali"] 
+|===
+
+NOTE: Dopo la migrazione da ONTAP tools for VMware vSphere 9.xx a 10.5, i datastore vVols che utilizzano il protocollo NVMe/FC diventano non operativi perché ONTAP tools 10.5 supporta il protocollo NVMe-oF solo con i datastore VMFS.

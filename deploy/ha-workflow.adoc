@@ -1,0 +1,41 @@
+---
+permalink: deploy/ha-workflow.html 
+sidebar: sidebar 
+keywords: ONTAP tools,Storage Replication Adapter 
+summary: Per iniziare con ONTAP tools for VMware vSphere sono necessari alcuni passaggi. 
+---
+= Flusso di lavoro di distribuzione ad alta disponibilità per ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Per aumentare la resilienza e supportare un maggior numero di container per servizio, espandi la tua distribuzione iniziale degli ONTAP tools a una configurazione ad alta disponibilità (HA). L'abilitazione del servizio VASA Provider è necessaria per i datastore vVols in una configurazione HA.
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-1.png["Uno"]Amplia la distribuzione
+[role="quick-margin-para"]
+Puoi scalare la configurazione degli ONTAP tools for VMware vSphere per aumentare il numero di nodi nella distribuzione e modificare la configurazione in un setup HA.
+
+[role="quick-margin-list"]
+* link:../manage/edit-appliance-settings.html["Modifica la configurazione di ONTAP tools for VMware vSphere"]
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-2.png["Due"]Abilita i servizi
+[role="quick-margin-para"]
+Per configurare i datastore vVols, è necessario abilitare il servizio VASA Provider. Registra il provider VASA con vCenter e assicurati che le tue policy di archiviazione soddisfino i requisiti di HA, incluse le configurazioni di rete e di archiviazione corrette.
+
+[role="quick-margin-para"]
+Abilita i servizi SRA per utilizzare ONTAP tools Storage Replication Adapter (SRA) per VMware Site Recovery Manager (SRM) o VMware Live Site Recovery (VLSR).
+
+[role="quick-margin-list"]
+* link:../manage/enable-services.html["Abilita i servizi VASA Provider e SRA"]
+
+
+.image:https://raw.githubusercontent.com/NetAppDocs/common/main/media/number-3.png["Tre"]Aggiorna i certificati
+[role="quick-margin-para"]
+Se usi datastore vVol con più istanze di vCenter Server, aggiorna il certificato autofirmato con un certificato firmato da un'autorità di certificazione (CA).
+
+[role="quick-margin-list"]
+* link:../manage/certificate-manage.html["Gestisci i certificati"]
+

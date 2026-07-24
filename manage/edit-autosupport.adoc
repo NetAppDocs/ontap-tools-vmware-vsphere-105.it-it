@@ -1,0 +1,49 @@
+---
+permalink: manage/edit-autosupport.html 
+sidebar: sidebar 
+keywords:  
+summary: Quando configuri ONTAP tools for VMware vSphere per la prima volta, AutoSupport è abilitato per impostazione predefinita. Invia messaggi al supporto tecnico 24 ore dopo che è stato abilitato. 
+---
+= Modifica le impostazioni di AutoSupport degli strumenti ONTAP
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando configuri ONTAP tools for VMware vSphere per la prima volta, AutoSupport è abilitato per impostazione predefinita. Invia messaggi al supporto tecnico 24 ore dopo che è stato abilitato.
+
+
+
+[[disable-autosupport]]
+== Disabilita AutoSupport
+
+Quando disattivi AutoSupport, non ricevi più supporto e monitoraggio proattivi.
+
+
+NOTE: Si consiglia di mantenere AutoSupport attiva, perché aiuta ad accelerare l'individuazione e la risoluzione dei problemi. Anche quando AutoSupport è disabilitato, il sistema continua a raccogliere e memorizzare informazioni localmente, ma non invia report sulla rete.
+
+.Passaggi
+. Avvia ONTAP tools Manager da un browser web: `\https://<ONTAPtoolsIP>:8443/virtualization/ui/`
+. Accedi con le credenziali di amministratore degli ONTAP tools for VMware vSphere che hai fornito durante la distribuzione.
+. Seleziona l'opzione *Impostazioni* > *Telemetria* > *Modifica*.
+. Deseleziona l'opzione *AutoSupport* e salva le modifiche.
+
+
+
+
+[[update-autosupport-proxy-url]]
+== Aggiorna l'URL del proxy AutoSupport
+
+Aggiorna l'URL del proxy AutoSupport così la funzionalità AutoSupport instrada i dati attraverso il proxy server per una trasmissione sicura.
+
+.Passaggi
+. Avvia ONTAP tools Manager da un browser web: `\https://<ONTAPtoolsIP>:8443/virtualization/ui/`
+. Accedi con le credenziali di amministratore degli ONTAP tools for VMware vSphere che hai fornito durante la distribuzione.
+. Seleziona *Impostazioni* dalla barra laterale.
+. Seleziona l'opzione *Impostazioni* > *Telemetria* > *Modifica*.
+. Inserisci un URL *Proxy* valido e salva le modifiche.
++
+Se disabiliti AutoSupport, anche l'URL del proxy viene disabilitato.
+
+

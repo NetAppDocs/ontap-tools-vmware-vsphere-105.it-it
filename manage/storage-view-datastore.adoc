@@ -1,0 +1,35 @@
+---
+permalink: manage/storage-view-datastore.html 
+sidebar: sidebar 
+keywords: Remove vVol datastore 
+summary: La vista di storage ONTAP, disponibile nella scheda Configura di ONTAP tools for VMware vSphere, fornisce dati relativi al datastore e ai suoi volumi. 
+---
+= Visualizzazioni dello storage ONTAP per i datastore negli ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+ONTAP tools for VMware vSphere mostra la vista lato storage ONTAP dei datastore e dei loro volumi nella scheda di configurazione.
+
+.Passaggi
+. Dal client vSphere, vai al datastore.
+. Seleziona la scheda *Configura* nel riquadro di destra.
+. Seleziona *NetApp ONTAP tools* > *ONTAP Storage*. La visualizzazione cambia in base al tipo di datastore. Vedi la tabella qui sotto:
+
+
+|===
+
+
+| *Tipo di datastore* | *Informazioni disponibili* 
+
+
+| Datastore NFS | La pagina *Dettagli di archiviazione* contiene informazioni sui backend di storage, sugli aggregati e sui volumi. La pagina *Dettagli NFS* contiene dati relativi al datastore NFS. 
+
+
+| Datastore VMFS | La pagina *Dettagli di archiviazione* contiene i dettagli relativi al backend di archiviazione, all'aggregato, al volume e alla zona di disponibilità dello storage (SAZ). La pagina *Dettagli dell'unità di archiviazione* contiene i dettagli dell'unità di archiviazione. 
+
+
+| datastore vVols | Elenca tutti i volumi. Puoi espandere o rimuovere lo storage dal riquadro dello storage ONTAP. ONTAP tools non supporta questa visualizzazione per i datastore vVols basati su sistema ASA r2. 
+|===

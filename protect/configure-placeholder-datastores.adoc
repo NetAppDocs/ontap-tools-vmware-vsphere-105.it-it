@@ -1,0 +1,31 @@
+---
+permalink: protect/configure-placeholder-datastores.html 
+sidebar: sidebar 
+keywords:  
+summary: 'Configura un datastore segnaposto per riservare spazio nell"inventario di vCenter nel sito di recovery per le macchine virtuali (VM) protette. I datastore segnaposto richiedono una capacità minima, perché le VM segnaposto sono piccole e di solito usano solo poche centinaia di kilobyte.' 
+---
+= Configurare i datastore segnaposto negli ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Configura un datastore segnaposto per riservare spazio nell'inventario di vCenter nel sito di recovery per le macchine virtuali (VM) protette. I datastore segnaposto richiedono una capacità minima, perché le VM segnaposto sono piccole e di solito usano solo poche centinaia di kilobyte.
+
+.Prima di iniziare
+* Assicurati che i siti protetti e di recovery siano collegati.
+* Verifica che le mappature delle risorse siano state configurate.
+
+
+.Passaggi
+. Accedi al vCenter Server e seleziona *Ripristino del sito* > *Siti*.
+. Seleziona il tuo sito protetto e seleziona *Gestisci*.
+. Nella scheda Gestisci, seleziona *Placeholder Datastores* > *New* per creare un nuovo placeholder datastore.
+. Seleziona l'archivio dati appropriato e seleziona *OK*.
++
+
+NOTE: I datastore segnaposto possono risiedere su storage locale o remoto, ma non richiedono la replica.
+
+. Ripeti i passaggi da 3 a 5 per configurare un datastore segnaposto per il sito di recovery.
+

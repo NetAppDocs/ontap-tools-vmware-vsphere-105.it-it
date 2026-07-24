@@ -1,0 +1,48 @@
+---
+permalink: manage/delete-ds.html 
+sidebar: sidebar 
+keywords: vVols datastore,delete vVol 
+summary: 'L"azione "Elimina datastore" elimina il datastore. Nel caso di un datastore NFS o VMFS, viene visualizzata una finestra di dialogo con l"elenco delle macchine virtuali che utilizzano il datastore.' 
+---
+= Elimina i datastore in ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Questa pagina descrive come eliminare i datastore NFS, VMFS o vVols utilizzando gli ONTAP tools nel server vCenter.
+
+Quando elimini un datastore, a seconda del tipo di datastore, vengono eseguite le seguenti azioni:
+
+* Il vVol container è stato smontato.
+* Se l'igroup non è in uso, i suoi initiator vengono rimossi dall'igroup.
+* Il vVol container è eliminato.
+* I volumi Flex rimangono sull'array di storage.
+
+
+Puoi eliminare il datastore solo se non sono presenti vVols nel datastore selezionato.
+
+.Passaggi
+. Accedi al vSphere client.
+. Fai clic con il pulsante destro del mouse su un sistema host, un cluster host o un data center e seleziona *NetApp ONTAP tools* > *Elimina datastore*.
++
+
+NOTE: Non puoi eliminare un datastore utilizzato da macchine virtuali. Sposta le macchine virtuali in un altro datastore prima di eliminarlo. Non puoi eliminare il volume se fa parte di un cluster host protetto.
+
++
+.. Nel caso di un datastore NFS o VMFS, viene visualizzata una finestra di dialogo con l'elenco delle VM che utilizzano il datastore.
+.. Se non sono associate macchine virtuali a un datastore VMFS, viene visualizzata una finestra di dialogo di conferma. Se la protezione del cluster host è abilitata ed esiste una relazione AFD, puoi eliminare gli elementi di storage secondario.
+.. Per i datastore VMFS protetti sui sistemi ASA r2, rimuovi la protezione prima di eliminarli. A partire da ONTAP 9.17.1 e ONTAP tools for VMware vSphere 10.5, puoi eliminare un datastore protetto. Se è l'unico datastore nel gruppo di protezione, la protezione del cluster host viene rimossa automaticamente.
+.. Per i datastore vVols, puoi eliminare il datastore solo se non sono presenti vVols. La finestra di dialogo *Elimina datastore* include un'opzione per rimuovere i volumi dal cluster ONTAP.
+.. Per i datastore vVols sui sistemi ASA r2, non puoi eliminare i volumi di supporto da ONTAP usando l'opzione *Elimina datastore*.
+
+
+. Per eliminare i volumi di supporto sullo storage ONTAP, seleziona *Elimina volumi su ONTAP cluster*.
++
+
+NOTE: Per i datastore VMFS su storage ONTAP unificato che fanno parte di un cluster host protetto, non puoi eliminare il volume dal cluster ONTAP.
+
+
+
+Quando elimini un datastore NFS, VMFS o vVols, gli igroup padre rimangono sul sistema ONTAP. Gli igroup figlio che non sono mappati a nessuna LUN vengono eliminati automaticamente. Gli ONTAP tools eseguono una pulizia giornaliera per rimuovere gli igroup padre predefiniti non mappati. Elimina manualmente gli igroup padre personalizzati in ONTAP. Gli ONTAP tools non possono riutilizzare gli igroup padre obsoleti.

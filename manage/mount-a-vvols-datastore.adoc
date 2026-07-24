@@ -1,0 +1,29 @@
+---
+permalink: manage/mount-a-vvols-datastore.html 
+sidebar: sidebar 
+keywords: Mount vVol 
+summary: 'Puoi montare un datastore VMware Virtual Volumes (vVols) su uno o più host aggiuntivi utilizzando la finestra di dialogo Mount vVols Datastore. Montare il datastore fornisce accesso allo storage a host aggiuntivi. Puoi smontare il datastore vVols solo tramite le API.' 
+---
+= Montare un datastore vVols negli ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Puoi montare un datastore VMware Virtual Volumes (vVols) su uno o più host aggiuntivi per fornire accesso allo storage ad altri host. Puoi smontare il datastore vVols solo tramite le API.
+
+
+NOTE: Quando aggiungi un nuovo host ESXi usando  https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/9-0/use-quickstart-to-add---host-to-a-cluster.html["Aggiungi un host ESX al workflow del tuo cluster vSphere"], aspetta che il rilevamento host pianificato sia completato prima che venga visualizzato in ONTAP tools. In alternativa, puoi avviare manualmente il rilevamento dalla schermata di panoramica di NetApp ONTAP tools.
+
+.Passaggi
+. Dalla home page del client vSphere, seleziona *Host e cluster*.
+. Nel riquadro di navigazione, seleziona il data center che contiene il datastore.
+. Fai clic con il pulsante destro del mouse sul datastore e seleziona *NetApp ONTAP tools* > *Monta datastore*.
+. Nella finestra di dialogo *Monta datastore sugli host*, seleziona gli host sui quali desideri montare il datastore, quindi seleziona *Monta*.
+
+
+Il pannello delle attività recenti mostra lo stato di avanzamento.
+
+.Argomento correlato
+link:../manage/add-vsphere-host.html["Aggiungi nuovi host vSphere VMware"]

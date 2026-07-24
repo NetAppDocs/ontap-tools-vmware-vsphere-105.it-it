@@ -1,0 +1,74 @@
+---
+permalink: protect/configure-protection-groups.html 
+sidebar: sidebar 
+keywords:  
+summary: Dovresti creare gruppi di protezione per proteggere un gruppo di macchine virtuali sul sito protetto. 
+---
+= Configura i siti protetti e di ripristino negli ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dovresti creare gruppi di protezione per proteggere un gruppo di macchine virtuali sul sito protetto.
+
+Quando aggiungi un nuovo datastore, puoi includerlo nel gruppo di datastore esistente oppure aggiungere un nuovo datastore e creare un nuovo volume o gruppo di coerenza per la protezione. Dopo aver aggiunto un nuovo datastore a un gruppo di coerenza o a un volume protetto, aggiorna SnapMirror ed esegui la discovery dello storage sia sul sito protetto che su quello di recovery. Puoi eseguire la discovery manualmente o secondo una pianificazione per assicurarti che il nuovo datastore venga rilevato e protetto.
+
+
+
+[[pair-protected-and-recovery-sites]]
+== Abbina siti protetti e di recovery
+
+Dovresti associare i siti protetti e di recovery creati usando il vSphere Client per permettere allo Storage Replication Adapter (SRA) di rilevare i sistemi storage.
+
+
+NOTE: Storage Replication Adapter (SRA) supporta il fan-out con una relazione sincrona di tipo Automated Failover Duplex e una relazione asincrona SnapMirror sul gruppo di coerenza. Tuttavia, il fan-out con due relazioni asincrone SnapMirror sui gruppi di coerenza o relazioni fan-out SnapMirror sui volumi non è supportato. Le relazioni di tipo vault SnapMirror non sono considerate all'interno di queste restrizioni di fan-out. Il supporto dei gruppi di coerenza in SRA è limitato ai protocolli SAN (iSCSI e fibre channel) sui sistemi di storage Unified e ASA r2. I gruppi di coerenza non sono supportati per NFS. Se i volumi del datastore NFS vengono inseriti in un gruppo di coerenza, l'operazione di rilevamento dei dispositivi non andrà a buon fine.
+
+.Prima di iniziare
+* Dovresti avere VMware Live Site Recovery installato sia sul sito protetto che su quello di recovery.
+* Dovresti avere SRA installato sia sul sito protetto che su quello di recovery.
+
+
+.Passaggi
+. Nella pagina iniziale del client vSphere, doppio click sull'icona *Ripristino sito* e quindi seleziona *Siti*.
+. Seleziona *Oggetti* > *Azioni* > *Associa siti*.
+. Nella finestra di dialogo *Associa server di Site Recovery Manager*, inserisci l'indirizzo del Platform Services Controller del sito protetto, quindi seleziona *Avanti*.
+. Nella sezione Seleziona vCenter Server, procedi come segue:
++
+.. Verifica che il server vCenter del sito protetto appaia come candidato corrispondente per l'accoppiamento.
+.. Inserisci le credenziali amministrative SSO e poi seleziona *Fine*.
+
+
+. Se richiesto, seleziona *Sì* per accettare i certificati di sicurezza.
+
+
+.Risultato
+La finestra di dialogo *Oggetti* visualizza sia i siti protetti che quelli di recovery.
+
+
+
+[[configure-protection-groups]]
+== Configura i gruppi di protezione
+
+.Prima di iniziare
+Dovresti assicurarti che sia il sito di origine che quello di destinazione siano configurati come segue:
+
+* Stessa versione di VMware Live Site Recovery installata
+* Macchine virtuali
+* Siti protetti e di recovery abbinati
+* I datastore di origine e di destinazione devono essere montati sui rispettivi siti
+
+
+.Passaggi
+. Accedi al vCenter Server e seleziona *Ripristino del sito* > *Gruppi di protezione*.
+. Nel riquadro *Gruppi di protezione*, seleziona *Nuovo*.
+. Specifica un nome e una descrizione per il gruppo di protezione, la direzione e seleziona *Avanti*.
+. Nel campo *Tipo*, selezionare l'opzione *Tipo campo...* come gruppi di datastore (replica basata su array) per i datastore NFS e VMFS. Il dominio di errore è costituito da SVM con replica abilitata. Vengono visualizzati gli SVM che hanno implementato solo il peering e non presentano problemi.
+. Nella scheda Gruppi di replica, seleziona la coppia di array abilitata o i gruppi di replica che hanno la macchina virtuale che hai configurato, quindi seleziona *Avanti*.
++
+Tutte le macchine virtuali presenti nel gruppo di replica vengono aggiunte al gruppo di protezione.
+
+. Puoi selezionare un piano di recovery esistente oppure crearne uno nuovo selezionando *Aggiungi a un nuovo piano di recovery*.
+. Nella scheda Pronto per il completamento, rivedi i dettagli del gruppo di protezione che hai creato e poi seleziona *Fine*.
+

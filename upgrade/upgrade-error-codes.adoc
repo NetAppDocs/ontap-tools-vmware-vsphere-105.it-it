@@ -1,0 +1,243 @@
+---
+permalink: upgrade/upgrade-error-codes.html 
+sidebar: sidebar 
+keywords: upgrade 
+summary: 'Questa pagina illustra i codici di errore per l"operazione di upgrade di ONTAP tools for VMware vSphere system.' 
+---
+= Codici di errore di aggiornamento di ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Potresti incontrare codici di errore durante l'operazione di aggiornamento degli ONTAP tools for VMware vSphere. I codici di errore sono composti da cinque cifre, dove le prime due cifre rappresentano lo script che ha riscontrato il problema e le ultime tre cifre rappresentano il flusso di lavoro specifico all'interno di quello script.
+
+Tutti i log degli errori vengono registrati nel file di log ansible-perl-errors.log per facilitare l'individuazione e la risoluzione dei problemi. Questo file di log contiene il codice di errore e l'attività Ansible non riuscita.
+
+
+NOTE: I codici di errore riportati in questa pagina sono solo a scopo di riferimento. Contatta il team di supporto se l'errore persiste o se non viene indicata alcuna soluzione.
+
+La tabella seguente elenca i codici di errore e i corrispondenti nomi dei file.
+
+|===
+
+
+| *Codice di errore* | *Nome script* 
+
+
+| 00 | firstboot-network-config.pl, modalità deploy 
+
+
+| 01 | firstboot-network-config.pl, modalità upgrade 
+
+
+| 02 | firstboot-inputs-validation.pl 
+
+
+| 03 | firstboot-deploy-otv-ng.pl, deploy, HA 
+
+
+| 04 | firstboot-deploy-otv-ng.pl, deploy, non-HA 
+
+
+| 05 | firstboot-deploy-otv-ng.pl, reboot 
+
+
+| 06 | firstboot-deploy-otv-ng.pl, aggiornamento, HA 
+
+
+| 07 | firstboot-deploy-otv-ng.pl, aggiornamento, non-HA 
+
+
+| 08 | firstboot-otv-recovery.pl 
+
+
+| 09 | post-deploy-upgrade.pl 
+|===
+Le ultime tre cifre del codice di errore indicano lo specifico errore del flusso di lavoro all'interno dello script:
+
+|===
+| *Codice errore aggiornamento* | *Flusso di lavoro* | *Risoluzione* 
+
+
+| 052 | L'immagine ISO potrebbe corrispondere alla versione corrente oppure essere fino a due versioni successive. | Utilizza una versione ISO compatibile per eseguire l'aggiornamento dalla versione corrente. 
+
+
+| 068 | Il rollback dei pacchetti Debian non è riuscito | Usa il ripristino zero-RPO o basato su snapshot e riprova l'aggiornamento. 
+
+
+| 069 | Ripristino dei file non riuscito | Usa il ripristino zero-RPO o basato su snapshot e riprova l'aggiornamento. 
+
+
+| 070 | Impossibile eliminare il backup | - 
+
+
+| 071 | Il cluster Kubernetes non era in buono stato | - 
+
+
+| 074 | Montaggio ISO non riuscito | Controlla il file /var/log/upgrade-run.log e riprova l'upgrade. 
+
+
+| 075 | I controlli preliminari dell'upgrade non sono riusciti | Riprova l'aggiornamento. 
+
+
+| 076 | Aggiornamento del registro non riuscito | Usa il ripristino zero-RPO o basato su snapshot e riprova l'aggiornamento. 
+
+
+| 077 | Il ripristino del registro non è riuscito | Usa il ripristino zero-RPO o basato su snapshot e riprova l'aggiornamento. 
+
+
+| 078 | L'aggiornamento dell'operatore non è riuscito | Usa il ripristino zero-RPO o basato su snapshot e riprova l'aggiornamento. 
+
+
+| 079 | Il rollback dell'operatore non è riuscito | Usa il ripristino zero-RPO o basato su snapshot e riprova l'aggiornamento. 
+
+
+| 080 | L'aggiornamento dei servizi non è riuscito | Usa il ripristino zero-RPO o basato su snapshot e riprova l'aggiornamento. 
+
+
+| 081 | Il rollback dei servizi non è riuscito | Usa il ripristino zero-RPO o basato su snapshot e riprova l'aggiornamento. 
+
+
+| 082 | Eliminazione delle vecchie immagini dal container non riuscita | Usa il ripristino zero-RPO o basato su snapshot e riprova l'aggiornamento. 
+
+
+| 083 | Eliminazione del backup non riuscita | Usa il ripristino zero-RPO o basato su snapshot e riprova l'aggiornamento. 
+
+
+| 084 | Modificare JobManager di nuovo in Produzione non è riuscito | Esegui i seguenti passaggi per ripristinare/completare l'aggiornamento. 1. Abilita la Diagnostic Shell 2. Esegui il comando: _sudo perl /home/maint/scripts/post-deploy-upgrade.pl --postupgrade_ 3. Controllare i log in /var/log/post-deploy-upgrade.log 
+
+
+| 087 | Le fasi successive all'aggiornamento non sono riuscite. | Esegui i seguenti passaggi per ripristinare/completare l'aggiornamento. 1. Abilita la Diagnostic Shell 2. Esegui il comando _sudo perl /home/maint/scripts/post-deploy-upgrade.pl --postupgrade_ 3. Controllare i log in /var/log/post-deploy-upgrade.log 
+
+
+| 088 | Configurare la rotazione dei log per journald non è riuscito | Verifica che le impostazioni di rete della macchina virtuale siano compatibili con l'host su cui è ospitata. Puoi provare a migrare la macchina virtuale su un altro host e riavviarla. 
+
+
+| 089 | Modificare la proprietà del file di configurazione della rotazione del registro di riepilogo non è riuscito | Riprova l'aggiornamento. 
+
+
+| 095 | Aggiornamento del sistema operativo non riuscito | Nessun ripristino per l'aggiornamento del sistema operativo. I servizi di ONTAP tools vengono aggiornati e nuovi pod saranno in esecuzione. 
+
+
+| 096 | Installa il provisioner di archiviazione dinamica | Controlla i log di aggiornamento e riprova l'upgrade. 
+
+
+| 097 | La disinstallazione dei servizi per l'aggiornamento non è riuscita | Usa il ripristino basato su RPO zero o su snapshot e riprova l'upgrade. 
+
+
+| 098 | Copiare il secret dockercred da ntv-system allo spazio dei nomi del dynamic storage provisioner non è riuscito | Controlla i log di aggiornamento e riprova l'upgrade. 
+
+
+| 099 | Impossibile convalidare la nuova aggiunta dell'HDD | Aggiungi il nuovo HDD a tutti i nodi in caso di HA e a un solo nodo in caso di deployment non HA. 
+
+
+| 109 | Il backup dei dati del volume persistente non è riuscito | Controlla i log di aggiornamento e riprova l'upgrade. 
+
+
+| 110 | Il ripristino dei dati del volume persistente non è riuscito | Usa il ripristino zero-RPO o basato su snapshot e riprova l'aggiornamento. 
+
+
+| 111 | Aggiornare i parametri di timeout di etcd per RKE2 non è riuscito | Controlla i log di aggiornamento e riprova l'upgrade. 
+
+
+| 112 | La disinstallazione del dynamic storage provisioner non è riuscita. | - 
+
+
+| 113 | Aggiornare le risorse sui nodi secondari non è riuscito | Controlla i log di aggiornamento e riprova l'upgrade. 
+
+
+| 104 | Il riavvio del nodo secondario non è riuscito | Riavviare manualmente i nodi, uno alla volta. 
+
+
+| 100 | Il rollback del kernel non è riuscito | - 
+
+
+| 051 | L'aggiornamento del dynamic storage provisioner non è riuscito | Controlla i log di aggiornamento e riprova l'aggiornamento. 
+
+
+| 056 | Eliminazione del backup di migrazione non riuscita | NA 
+
+
+| 090 | convalida del certificato per i backend di archiviazione e vCenter non riuscita | Controlla i log di aggiornamento e il file di log in /var/log/cert_validation_error.log e riprova l'upgrade. 
+
+
+| 114 | Aggiornamento interno del certificato nella collezione MongoDB non riuscito  a| 
+Se l'upgrade non riesce e viene visualizzato il codice di errore 114, eseguire i seguenti passaggi:
+
+. Connettiti all'immagine ISO di aggiornamento sul nodo primario e abilita la shell diagnostica.
+. Monta l'immagine ISO dalla sessione SSH sul nodo primario:
++
+[listing]
+----
+sudo mount /dev/cdrom
+sudo mount -o loop,ro /dev/cdrom/APPLIANCE_UPGRADE.bin /upgrade
+----
+. Installa i pacchetti Debian:
++
+[listing]
+----
+sudo dpkg -iE /upgrade/dists/squeeze/main/binary-amd64/vplatform.deb
+sudo dpkg -iE /upgrade/dists/squeeze/main/binary-amd64/vpupgrader.deb
+sudo dpkg -iE /upgrade/dists/squeeze/main/binary-amd64/vmware-tools.deb
+----
+. Copia il file delle informazioni di build:
++
+[listing]
+----
+sudo cp /upgrade/APPLIANCE_BUILD /
+----
+. Aggiungi i certificati alla raccolta abilitando la shell diagnostica ed eseguendo:
++
+[listing]
+----
+sudo perl /home/maint/scripts/post-deploy-upgrade.pl --internal_cert_update_collection
+----
++
+Controlla i registri su  `/var/log/otvng/post-deploy-upgrade.log`.
+
+. Riavvia i nodi:
++
+[listing]
+----
+sudo bash /home/maint/scripts/vault_decrypt.sh
+cd /home/maint/rke2-pb
+sudo ansible-playbook site.yaml --tags restart_nodes --skip-tags debian_upgrade,kernel_upgrade,rescan_scsi_bus,source_iso,eject_upgrade,mountIso,upgradeNodes,registryUpg,deleteOldImages,wait,checkReachability,delete_otv_cr,uninstall_trident,del_trident_images,refresh_resources,ntp_configure,ntpd_uninstall
+----
+. Eseguire i passaggi successivi all'aggiornamento:
++
+[listing]
+----
+sudo perl /home/maint/scripts/post-deploy-upgrade.pl --postupgrade
+----
+. Verifica l'avvenuta conclusione controllando i registri:
++
+[listing]
+----
+tail -f /var/log/post-deploy-upgrade.log
+----
++
+Cerca il messaggio di conferma: `Completed post 10.5 upgrade steps.`
+
+. Espelli l'ISO:
++
+[listing]
+----
+sudo umount -l -f /upgrade
+sudo umount -l -f /dev/cdrom
+sudo eject /dev/cdrom
+----
+. Riavvia il nodo primario:
++
+[listing]
+----
+sudo reboot -f
+----
+
+
+|===
+
+NOTE: A partire da ONTAP tools for VMware vSphere 10.3, zero RPO non è supportato.
+
+Scopri di più su https://kb.netapp.com/data-mgmt/OTV/VSC_Kbs/How_to_restore_ONTAP_tools_for_VMware_vSphere_if_upgrade_fails_from_version_10.0_to_10.1["Come ripristinare ONTAP tools for VMware vSphere se l'aggiornamento dalla versione 10.0 alla 10.1 non riesce"]

@@ -1,0 +1,48 @@
+---
+permalink: manage/change-valid-flag.html 
+sidebar: sidebar 
+keywords:  
+summary: Puoi modificare il flag di convalida del certificato tramite la console di manutenzione. 
+---
+= Modificare il flag di convalida del certificato negli ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Per impostazione predefinita, il flag di convalida del certificato è abilitato (impostato su true). Puoi impostare il flag di convalida del certificato del backend di storage ONTAP su false se hai bisogno di bypassare i controlli del certificato SAN. Questa impostazione non si applica ai certificati del server vCenter.
+
+.Prima di iniziare
+Devi avere le credenziali di accesso dell'utente di manutenzione.
+
+.Passaggi
+. Dal vCenter Server, apri una console per ONTAP tools.
+. Accedi come utente di manutenzione.
+. Premi Invio  `1` per selezionare il menu *Application Configuration*.
+. Inserisci  `3` per modificare il flag di convalida del certificato.
++
+La console di manutenzione mostra lo stato del flag di convalida del certificato e ti invita a modificarlo.
+
+. Digita 'y' per attivare/disattivare il flag o 'n' per annullare.
+
+
+Quando abiliti il flag di convalida del certificato (impostato su true), ONTAP tools verifica che tutti i backend di storage utilizzino certificati con un Subject Alternative Name (SAN). Se un backend utilizza un certificato senza SAN, non puoi abilitare la convalida del certificato. Prima di abilitare questo flag, verifica che tutti i backend di storage utilizzino certificati basati su SAN. Se disabiliti il flag di convalida del certificato (impostato su false), ONTAP tools ignora la convalida del certificato per tutti i backend di storage configurati.
+
+
+
+[[verify-san-based-certificates-for-storage-backends]]
+== Verificare i certificati basati su SAN per i backend di storage
+
+Per garantire una comunicazione sicura e una convalida adeguata, verificare che tutti i backend di archiviazione utilizzino certificati basati su SAN:
+
+. Verificare che il certificato di gestione ONTAP includa una voce Subject Alternative Name (SAN).
+. Confermare che le voci SAN corrispondano all'indirizzo IP di gestione ONTAP o al nome DNS, o a entrambi.
+. Assicurarsi che i dettagli utilizzati per integrare ONTAP corrispondano all'indirizzo IP o al nome DNS nella voce SAN del certificato.
+
+
+Seguendo questi passaggi si evitano problemi di convalida dei certificati e si garantisce che il sistema ONTAP sia integrato in modo sicuro.
+
+Il seguente certificato di esempio mostra le informazioni decodificate:
+
+image:../media/sample-cert.png["Esempio di certificato"]

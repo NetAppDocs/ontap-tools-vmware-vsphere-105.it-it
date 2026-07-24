@@ -1,0 +1,31 @@
+---
+permalink: manage/enable-services.html 
+sidebar: sidebar 
+keywords:  
+summary: 'È possibile abilitare servizi opzionali come VASA Provider, l"importazione della configurazione di vVols e il disaster recovery (SRA) utilizzando ONTAP tools Manager.' 
+---
+= Abilita i servizi di ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Puoi cambiare la password dell'amministratore usando ONTAP tools Manager per abilitare servizi come VASA Provider, l'importazione della configurazione vVols e il disaster recovery (SRA) usando ONTAP tools Manager.
+
+.Passaggi
+. Avvia ONTAP tools Manager da un browser web: `\https://<ONTAPtoolsIP>:8443/virtualization/ui/`
+. Accedi con le credenziali di amministratore degli ONTAP tools for VMware vSphere che hai fornito durante la distribuzione.
+. Nella sezione Panoramica, seleziona *Modifica impostazioni dell'appliance*.
+. Nella sezione *Servizi*, puoi abilitare servizi opzionali come VASA Provider, importazione della configurazione vVols e disaster recovery (SRA) secondo necessità.
++
+Quando abiliti i servizi per la prima volta, devi creare le credenziali del VASA Provider e dell'SRA. Queste vengono utilizzate per registrare o abilitare i servizi del VASA Provider e dell'SRA sul vCenter Server. Il nome utente può contenere solo lettere, numeri e trattini bassi. La lunghezza della password deve essere compresa tra 8 e 256 caratteri.
+
++
+
+NOTE: Prima di disabilitare qualsiasi servizio opzionale, assicurati che i server vCenter gestiti da ONTAP tools non li utilizzino.
+
++
+L'opzione *Consenti importazione della configurazione vVols* viene visualizzata solo quando il servizio VASA Provider è abilitato. Questa opzione consente la migrazione dei dati vVols da ONTAP tools 9.xx a ONTAP tools 10.5.
+
+

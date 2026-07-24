@@ -1,0 +1,37 @@
+---
+indexpage:
+  title: Documentazione di ONTAP tools per VMware vSphere
+  lead: ONTAP tools for VMware vSphere ti permette di configurare, gestire e proteggere
+    i tuoi datastore virtuali nell'ambiente vCenter Server.
+  tiles:
+  - title: Inizia
+    links:
+    - title: Note di rilascio
+      url: https://library.netapp.com/ecm/ecm_download_file/ECMLP3358876
+    - title: Scopri gli strumenti ONTAP per VMware vSphere
+      url: "/concepts/ontap-tools-overview.html"
+    - title: Distribuisci ONTAP tools per VMware vSphere
+      url: "/deploy/ontap-tools-deployment.html"
+    - title: Aggiorna all'ultima versione di ONTAP tools for VMware vSphere
+      url: "/upgrade/upgrade-ontap-tools.html"
+    - title: Migra ONTAP tools for VMware vSphere
+      url: migrate/migrate-to-latest-ontaptools.html
+  - title: Usa ONTAP tools for VMware vSphere
+    links:
+    - title: Configura il controllo degli accessi in base al ruolo
+      url: "/concepts/rbac-learn-about.html"
+    - title: Configura la diagnostica remota
+      url: "/manage/configure-remote-diagnostic-access.html"
+    - title: Proteggi i tuoi archivi dati
+      url: "/protect/enable-storage-replication-adapter.html"
+  - title: Altre risorse
+    links:
+    - title: Documentazione per le versioni precedenti di ONTAP tools for VMware vSphere
+        9
+      url: https://mysupport.netapp.com/documentation/productlibrary/index.html?productID=63792
+    - title: NetApp Knowledge Base - ONTAP tools for VMware vSphere
+      url: https://kb.netapp.com/data-mgmt/OTV
+    - title: NetApp Community - ONTAP tools for VMware vSphere
+      url: https://community.netapp.com/t5/VMware-Solutions-Discussions/bd-p/vmware-solutions-discussions
+    - title: Scopri VMware vSphere con ONTAP
+      url: https://docs.netapp.com/us-en/ontap-apps-dbs/vmware/vmware-vsphere-overview.html#why-ontap-for-vsphere

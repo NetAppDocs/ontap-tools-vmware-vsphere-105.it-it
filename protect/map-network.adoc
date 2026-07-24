@@ -1,0 +1,42 @@
+---
+permalink: protect/map-network.html 
+sidebar: sidebar 
+keywords:  
+summary: Dovresti mappare le reti del sito protetto e del sito di recovery per abilitare la comunicazione tra di esse. 
+---
+= Configurare le mappature di rete negli ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dovresti configurare le mappature delle risorse, come reti VM, host ESXi e cartelle, su entrambi i siti per permettere la mappatura di ogni risorsa dal sito protetto alla risorsa appropriata nel sito di recovery.
+
+Dovresti completare le seguenti configurazioni delle risorse:
+
+* Mappature di rete
+* Mappatura delle cartelle
+* Mappature delle risorse
+* Datastore segnaposto
+
+
+.Prima di iniziare
+Dovresti aver collegato i siti protetto e di recovery.
+
+.Passaggi
+. Accedi al vCenter Server e seleziona *Ripristino del sito* > *Siti*.
+. Seleziona il tuo sito protetto e seleziona *Gestisci*.
+. Seleziona *Mappature di rete* > *Nuovo* nella scheda Gestisci per creare una nuova mappatura di rete.
+. Nella procedura guidata Crea mappatura di rete, fai quanto segue:
++
+.. Seleziona *Prepara automaticamente le mappature per le reti con nomi corrispondenti* e seleziona *Avanti*.
+.. Seleziona gli oggetti del data center necessari per i siti protetti e di recovery e seleziona *Aggiungi mappature*.
+.. Seleziona *Avanti* dopo che le mappature sono state create con successo.
+.. Seleziona l'oggetto utilizzato in precedenza per creare la mappatura inversa e poi seleziona *Finish*.
+
+
+
+
+.Risultato
+La pagina Mappature di rete visualizza le risorse del sito protetto e le risorse del sito di ripristino. Puoi seguire gli stessi passaggi per le altre reti nel tuo ambiente.

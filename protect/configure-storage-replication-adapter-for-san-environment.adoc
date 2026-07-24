@@ -1,0 +1,69 @@
+---
+permalink: protect/configure-storage-replication-adapter-for-san-environment.html 
+sidebar: sidebar 
+keywords:  
+summary: 'Dovresti configurare i sistemi di storage prima di eseguire Storage Replication Adapter (SRA) per VMware Live Site Recovery.' 
+---
+= Configurare SRA in ONTAP tools for VMware vSphere per ambienti SAN e NAS
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dovresti configurare i sistemi di storage prima di eseguire Storage Replication Adapter (SRA) per VMware Live Site Recovery.
+
+
+
+[[configure-sra-for-san-environments]]
+== Configura SRA per ambienti SAN
+
+
+NOTE: I gruppi di coerenza nei flussi di lavoro SRA sono supportati solo con protocolli SAN (iSCSI e Fibre Channel) sia sui sistemi di storage Unified che ASA r2.
+
+.Prima di iniziare
+Dovresti avere i seguenti programmi installati sul sito protetto e sul sito di recovery:
+
+* VMware Live Site Recovery: Il sito VMware fornisce la documentazione per l'installazione di VMware Live Site Recovery.
++
+https://techdocs.broadcom.com/us/en/vmware-cis/live-recovery/live-site-recovery/9-0/about-vmware-live-site-recovery-installation-and-configuration.html["Informazioni su VMware Live Site Recovery"]
+
+* SRA: Installa l'adattatore su VMware Live Site Recovery.
+
+
+Per le configurazioni del protocollo iSCSI, prima di eseguire i flussi di lavoro SRA, tenere presente quanto segue:
+
+* *Sito protetto*: gli adattatori di storage iSCSI e i dettagli LIF dei dati vengono configurati automaticamente durante il provisioning dei datastore. Non è richiesta alcuna configurazione manuale.
+* *Sito di ripristino*: gli adattatori di storage iSCSI devono essere configurati manualmente su ciascun host ESXi incluso nella mappatura delle risorse per il ripristino di emergenza. Per evitare di configurare gli adattatori singolarmente su ciascun host, crea un datastore segnaposto di tipo iSCSI sul sito di ripristino utilizzando la SVM su cui sono configurati i workflow SRA. Questo aggiunge automaticamente l'adattatore iSCSI e gli indirizzi IP LIF dei dati necessari a tutti gli host ESXi mappati. Consultare link:../protect/configure-placeholder-datastores.html["Configurare i datastore segnaposto negli ONTAP tools"] per maggiori dettagli.
+
+
+.Passaggi
+. Verifica che gli host ESXi primari siano connessi alle LUN nel sistema di storage primario del sito protetto.
+. Verificare che le LUN siano presenti in igroups che hanno l' `ostype`opzione impostata su _VMware_ sul sistema di storage primario.
+. Verifica che gli host ESXi del sito di recovery abbiano una connettività iSCSI e Fibre Channel appropriata verso la storage virtual machine (SVM). Gli host ESXi del sito secondario devono avere accesso allo storage del sito secondario, e gli host ESXi del sito primario devono avere accesso allo storage del sito primario.
++
+Puoi farlo verificando che gli host ESXi abbiano LUN locali connessi sull'SVM oppure tramite il comando  `iscsi show initiators` sugli SVM. Controlla l'accesso ai LUN per i LUN mappati nell'host ESXi per verificare la connettività iSCSI.
+
+
+
+
+
+[[configure-sra-for-nas-environments]]
+== Configura SRA per gli ambienti NAS
+
+
+NOTE: I gruppi di coerenza non sono supportati per NFS nei flussi di lavoro SRA. Se i volumi di datastore NFS vengono inseriti in un gruppo di coerenza e protetti, l'operazione Discover Devices non andrà a buon fine. Non utilizzare i gruppi di coerenza quando si proteggono i datastore NFS con SRA.
+
+.Prima di iniziare
+Dovresti avere i seguenti programmi installati sul sito protetto e sul sito di recovery:
+
+* VMware Live Site Recovery: Puoi trovare la documentazione di installazione di VMware Live Site Recovery sul sito VMware https://techdocs.broadcom.com/us/en/vmware-cis/live-recovery/live-site-recovery/9-0/about-vmware-live-site-recovery-installation-and-configuration.html["Informazioni su VMware Live Site Recovery"]
+* SRA: Installa l'adattatore su VMware Live Site Recovery e sul server SRA.
+
+
+.Passaggi
+. Verifica che i datastore del sito protetto contengano macchine virtuali registrate con vCenter Server.
+. Verificare che gli host ESXi nel sito protetto abbiano montato i volumi di esportazione NFS dalla storage virtual machine (SVM).
+. Verificare che nel campo *NFS Addresses* siano specificati indirizzi IP validi su cui sono presenti le esportazioni NFS quando si utilizza la procedura guidata di Array Manager per aggiungere array a VMware Live Site Recovery. Non utilizzare il nome host NFS o il FQDN nel campo *NFS Addresses*.
+. Usa il comando  `ping` su ogni host ESXi nel sito di recovery per verificare che l'host abbia una porta VMkernel che può accedere agli indirizzi IP utilizzati per servire le esportazioni NFS dalla SVM.
+

@@ -1,0 +1,62 @@
+---
+permalink: protect/configure-array-manager.html 
+sidebar: sidebar 
+keywords:  
+summary: 'Puoi configurare l"adattatore di replica dello storage (SRA) usando la procedura guidata Array Manager di VMware Live Site Recovery per abilitare le interazioni tra VMware Live Site Recovery e le macchine virtuali di storage (SVM).' 
+---
+= Configurare SRA utilizzando il gestore array in ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Puoi configurare Storage Replication Adapter (SRA) usando la procedura guidata Array Manager di VMware Live Site Recovery per abilitare le interazioni tra VMware Live Site Recovery e le macchine virtuali di storage (SVM).
+
+.Prima di iniziare
+* Dovresti aver associato i siti protetti e i siti di recovery in VMware Live Site Recovery.
+* Dovresti aver configurato lo storage integrato prima di configurare l'array manager.
+* Dovresti aver configurato e replicato le relazioni di SnapMirror tra i siti protetti e i siti di recovery.
+* Dovresti aver abilitato i LIF di gestione SVM per abilitare il multitenancy.
+
+
+SRA supporta la gestione a livello di cluster e la gestione a livello di SVM. Se aggiungi storage a livello di cluster, puoi individuare ed eseguire operazioni su tutte le SVM presenti nel cluster. Se aggiungi storage a livello di SVM, puoi gestire solo quella specifica SVM.
+
+.Passaggi
+. In VMware Live Site Recovery, seleziona *Gestori array* > *Aggiungi gestore array*.
+. Inserisci le seguenti informazioni per descrivere l'array in VMware Live Site Recovery:
++
+.. Inserisci un nome per identificare il gestore dell'array nel campo *Nome visualizzato*.
+.. Nel campo *Tipo SRA*, seleziona *NetApp Storage Replication Adapter for ONTAP*.
+.. Inserisci le informazioni per connetterti al cluster o all'SVM:
++
+*** Se ti stai connettendo a un cluster, dovresti inserire la LIF di gestione del cluster.
+*** Se ti connetti direttamente a un SVM, devi immettere l'indirizzo IP del LIF di gestione dell'SVM.
++
+
+NOTE: Quando configuri l'array manager, dovresti usare la stessa connessione (indirizzo IP) per il sistema storage che hai usato per l'onboarding del sistema storage in ONTAP tools for VMware vSphere. Ad esempio, se la configurazione dell'array manager è a livello SVM, allora lo storage sotto ONTAP tools for VMware vSphere dovrebbe essere aggiunto a livello SVM.
+
+
+
+.. Se ti connetti a un cluster, specifica il nome dell'SVM nel campo *Nome SVM* oppure lascialo vuoto per gestire tutti gli SVM del cluster.
+.. Inserisci i volumi da rilevare nel campo *Volume include list*.
++
+Puoi inserire il volume di origine nel sito protetto e il volume di destinazione replicato nel sito di recovery.
+
++
+Ad esempio, se vuoi individuare il volume src_vol1 che è in una relazione di SnapMirror con il volume dst_vol1, dovresti specificare src_vol1 nel campo del sito protetto e dst_vol1 nel campo del sito di recovery.
+
+.. *(Facoltativo)* Inserisci i volumi da escludere dalla discovery nel campo *Volume exclude list*.
++
+Puoi inserire il volume di origine nel sito protetto e il volume di destinazione replicato nel sito di recovery.
+
++
+Ad esempio, se vuoi escludere il volume _src_vol1_ che è in una relazione di SnapMirror con il volume _dst_vol1_, dovresti specificare _src_vol1_ nel campo del sito protetto e _dst_vol1_ nel campo del sito di recovery.
+
+
+
+. Seleziona *Avanti*.
+. Verifica che l'array venga rilevato e visualizzato nella parte inferiore della finestra Aggiungi gestore array e seleziona *Fine*.
+
+
+Puoi seguire gli stessi passaggi per il sito di recovery utilizzando gli indirizzi IP di gestione SVM e le credenziali appropriate. Nella schermata Abilita coppie di array della procedura guidata Aggiungi gestore array, dovresti verificare che sia selezionata la coppia di array corretta e che risulti pronta per essere abilitata.

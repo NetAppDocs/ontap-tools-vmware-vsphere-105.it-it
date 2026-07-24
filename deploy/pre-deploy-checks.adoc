@@ -1,0 +1,152 @@
+---
+permalink: deploy/pre-deploy-checks.html 
+sidebar: sidebar 
+keywords: ONTAP tools,Storage Replication Adapter 
+summary: Prima di distribuire gli ONTAP tools for VMware vSphere, dovresti conoscere i requisiti di spazio per il pacchetto di distribuzione e alcuni requisiti di base del sistema host. 
+---
+= Requisiti di pre-distribuzione per ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Assicurati che i seguenti requisiti siano soddisfatti prima di procedere con l'implementazione:
+
+|===
+| Requisiti | Il tuo stato 
+
+
+| vSphere versione, versione di ONTAP e versione dell'host ESXi sono compatibili con la versione degli strumenti ONTAP. | ❏ Sì ❏ No 
+
+
+| vCenter Server environment è stato impostato e configurato | ❏ Sì ❏ No 
+
+
+| La cache del browser è stata eliminata | ❏ Sì ❏ No 
+
+
+| Hai le credenziali del server vCenter principale | ❏ Sì ❏ No 
+
+
+| Hai le credenziali di accesso per l'istanza del server vCenter, a cui gli ONTAP tools for VMware vSphere si connetteranno dopo la distribuzione per la registrazione | ❏ Sì ❏ No 
+
+
+| Il nome di dominio su cui viene emesso il certificato è mappato all'indirizzo IP virtuale in una distribuzione multi-vCenter in cui i certificati CA personalizzati sono obbligatori. | ❏ Sì ❏ No 
+
+
+| Hai eseguito il controllo nslookup sul domain name per verificare se il dominio viene risolto all'indirizzo IP previsto. | ❏ Sì ❏ No 
+
+
+| Il certificato viene creato con il domain name e l'indirizzo IP degli ONTAP tools. | ❏ Sì ❏ No 
+
+
+| L'applicazione ONTAP tools e i servizi interni sono raggiungibili dal vCenter Server. | ❏ Sì ❏ No 
+
+
+| Quando usi SVM multi-tenant, hai un LIF di gestione SVM su ciascuna SVM. | ❏ Sì ❏ No 
+|===
+
+
+[[deployment-worksheet]]
+== Foglio di lavoro per l'implementazione
+
+
+
+[[for-single-node-deployment]]
+=== Per la distribuzione a nodo singolo
+
+Utilizza il seguente foglio di lavoro per raccogliere le informazioni necessarie per la distribuzione iniziale di ONTAP tools for VMware vSphere:
+
+|===
+| Requisito | Il tuo valore 
+
+
+| Indirizzo IP per l'applicazione ONTAP tools. Questo è l'indirizzo IP per accedere all'interfaccia web del gestore ONTAP tools (load balancer) a `\https://<ip>:8443/virtualization/ui/` |  
+
+
+| Indirizzo IP virtuale di ONTAP tools per la comunicazione interna. Questo indirizzo IP viene utilizzato per la comunicazione interna in una configurazione con più istanze di ONTAP tools. Questo indirizzo IP non deve essere uguale all'indirizzo IP per l'applicazione ONTAP tools. (Il Kubernetes Control Plane) |  
+
+
+| Nome host DNS per il nodo di gestione degli ONTAP tools |  
+
+
+| DNS server primario |  
+
+
+| DNS server secondario |  
+
+
+| dominio di ricerca DNS |  
+
+
+| Indirizzo IPv4 per il nodo di gestione degli ONTAP tools. Si tratta di un indirizzo IPv4 univoco per l'interfaccia di gestione del nodo sulla rete di gestione. Questo viene utilizzato per connettersi all'appliance degli strumenti ONTAP per l'accesso diagnostico remoto tramite SSH. |  
+
+
+| Maschera di sottorete per l'indirizzo IPv4 |  
+
+
+| Gateway predefinito per l'indirizzo IPv4 |  
+
+
+| Indirizzo IPv6 (facoltativo) |  
+
+
+| Lunghezza prefisso IPv6 (opzionale) |  
+
+
+| Gateway per l'indirizzo IPv6 (opzionale) |  
+|===
+
+NOTE: Crea record DNS per tutti gli indirizzi IP sopra indicati. Prima di assegnare i nomi host, mappali agli indirizzi IP liberi nel DNS. Tutti gli indirizzi IP devono trovarsi sulla stessa VLAN selezionata per la distribuzione.
+
+
+
+[[for-high-availability-ha-deployment]]
+=== Per la distribuzione ad alta disponibilità (HA)
+
+Oltre ai requisiti per la distribuzione a nodo singolo, ti serviranno le seguenti informazioni per la distribuzione ad alta disponibilità (HA):
+
+|===
+
+
+| Requisito | Il tuo valore 
+
+
+| DNS server primario |  
+
+
+| DNS server secondario |  
+
+
+| dominio di ricerca DNS |  
+
+
+| Nome host DNS per il secondo nodo |  
+
+
+| Indirizzo IP del secondo nodo |  
+
+
+| Nome host DNS per il terzo nodo |  
+
+
+| Indirizzo IP per il terzo nodo |  
+|===
+
+
+[[network-firewall-configuration]]
+== Configurazione del firewall di rete
+
+Assicurati che le porte del firewall necessarie siano aperte per tutti gli indirizzi IP rilevanti. ONTAP tools richiede l'accesso al LIF tramite la porta 443. Per un elenco completo delle porte richieste, consulta la sezione relativa ai requisiti delle porte su link:../deploy/prerequisites.html["Requisiti e limiti di configurazione di ONTAP tools per VMware vSphere"].
+
+
+
+[[ontap-storage-settings]]
+== Impostazioni di storage ONTAP
+
+Per garantire una perfetta integrazione dello storage ONTAP con ONTAP tools for VMware vSphere, considera le seguenti impostazioni:
+
+* Se usi Fibre Channel (FC) per la connettività di archiviazione, configura lo zoning sugli switch FC per connettere gli host ESXi con le LIF FC dell'SVM. https://docs.netapp.com/us-en/ontap/san-config/fibre-channel-fcoe-zoning-concept.html["Scopri la zonizzazione FC e FCoE con i sistemi ONTAP"]
+* Per utilizzare la replica SnapMirror gestita dagli strumenti ONTAP, l'amministratore dello storage ONTAP deve creare  https://docs.netapp.com/us-en/ontap/peering/create-cluster-relationship-93-later-task.html["Relazioni tra cluster peer ONTAP"] e  https://docs.netapp.com/us-en/ontap/peering/create-intercluster-svm-peer-relationship-93-later-task.html["Relazioni peer SVM intercluster ONTAP"] in ONTAP prima di utilizzare SnapMirror.
+

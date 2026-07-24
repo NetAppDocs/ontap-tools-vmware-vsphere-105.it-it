@@ -1,0 +1,274 @@
+---
+permalink: concepts/rbac-vcenter-use.html 
+sidebar: sidebar 
+keywords: vcenter, vcenter server, vcenter server rbac, use rbac 
+summary: 'Ci sono diversi aspetti degli ONTAP tools for VMware vSphere 10 nell"implementazione RBAC con vCenter Server che dovresti considerare prima di usarli in un ambiente di produzione.' 
+---
+= vCenter Server: considerazioni RBAC per ONTAP tools
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+Ci sono diversi aspetti degli ONTAP tools for VMware vSphere 10 nell'implementazione RBAC con vCenter Server che dovresti considerare prima di usarli in un ambiente di produzione.
+
+
+
+[[vcenter-roles-and-the-administrator-account]]
+== vCenter ruoli e l'account amministratore
+
+Devi definire e utilizzare i ruoli server personalizzati di vCenter solo se vuoi limitare l'accesso agli oggetti vSphere e alle attività amministrative associate. Se non è necessario limitare l'accesso, puoi usare un account amministratore. Ogni account amministratore è definito con il ruolo di Administrator al livello superiore della gerarchia degli oggetti. Questo garantisce l'accesso completo agli oggetti vSphere, inclusi quelli aggiunti da ONTAP tools for VMware vSphere 10.
+
+
+
+[[vsphere-object-hierarchy]]
+== Gerarchia degli oggetti vSphere
+
+L'inventario degli oggetti vSphere è organizzato in una gerarchia. Ad esempio, puoi scendere nella gerarchia come segue:
+
+`vCenter Server` --> `Datacenter` --> `Cluster` --> `ESXi host` --> `Virtual Machine`
+
+Tutte le autorizzazioni vengono validate nella gerarchia degli oggetti di vSphere, ad eccezione delle operazioni del plug-in VAAI, che vengono validate rispetto all'host ESXi di destinazione.
+
+
+
+[[roles-included-with-ontap-tools-for-vmware-vsphere-10]]
+== Ruoli inclusi con ONTAP tools for VMware vSphere 10
+
+Per semplificare il lavoro con il controllo degli accessi basato sui ruoli (RBAC) del server vCenter, ONTAP tools for VMware vSphere fornisce ruoli predefiniti adattati a varie attività amministrative.
+
+
+NOTE: Se necessario, è possibile creare nuovi ruoli personalizzati. Per farlo, clonare uno dei ruoli esistenti di ONTAP tools e modificarlo secondo le proprie esigenze. Dopo aver apportato le modifiche alla configurazione, gli utenti client vSphere interessati dovranno disconnettersi e accedere nuovamente per attivare le modifiche.
+
+Per visualizzare i ruoli di ONTAP tools for VMware vSphere, selezionare *Menu* nella parte superiore del vSphere Client e fare clic su *Amministrazione* e poi su *Ruoli* a sinistra. I seguenti privilegi devono essere inclusi nel ruolo assegnato all'utente vCenter responsabile della distribuzione o dell'onboarding del vCenter Server. Assicurarsi che questi privilegi siano configurati come prerequisito per il processo di distribuzione o onboarding.
+
+* Allarmi
++
+** Conferma l'allarme
+
+
+* Libreria dei contenuti
++
+** Aggiungi elemento della libreria
+** Verifica in un template
+** Dai un'occhiata a un modello
+** Scarica i file
+** Importa storage
+** Storage di lettura
+** Sincronizza elemento della libreria
+** Sincronizza la libreria sottoscritta
+** Visualizza le impostazioni di configurazione
+
+
+* Datastore
++
+** Assegna spazio
+** Esplora datastore
+** Operazioni sui file di basso livello
+** Rimuovi file
+** Aggiornare i file della macchina virtuale
+** Aggiornare i metadati della macchina virtuale
+
+
+* ESX Agent Manager
++
+** Visualizza
+
+
+* Cartella
++
+** Crea cartella
+
+
+* Host
++
+** Configurazione
++
+*** Impostazioni avanzate
+*** Modifica impostazioni
+*** Configurazione di rete
+*** Risorse di sistema
+*** Configurazione dell'avvio automatico della macchina virtuale
+
+
+** Operazioni locali
++
+*** Crea macchina virtuale
+*** Eliminare la macchina virtuale
+*** Riconfigurare la macchina virtuale
+
+
+
+
+* Rete
++
+** Assegna rete
+** Configurare
+
+
+* OvfManager
++
+** OvfConsumer Accesso
+
+
+* Profilo host
++
+** Visualizza
+
+
+* Risorsa
++
+** Assegna la macchina virtuale al pool di risorse
+
+
+* Attività pianificata
++
+** Crea attività
+** Modifica attività
+** Esegui attività
+
+
+* Attività
++
+** Crea attività
+** Aggiorna attività
+
+
+* vApp
++
+** Aggiungi macchina virtuale
+** Assegna pool di risorse
+** Assegna vApp
+** Crea
+** Importare
+** Sposta
+** Spegni
+** Accendi
+** Scarica da URL
+** Visualizza l'ambiente OVF
+
+
+* Macchina virtuale
++
+** Modifica configurazione
++
+*** Aggiungi disco esistente
+*** Aggiungi nuovo disco
+*** Aggiungi o rimuovi dispositivo
+*** Configurazione avanzata
+*** Modifica il conteggio della CPU
+*** Modifica memoria
+*** Modifica impostazioni
+*** Cambia risorsa
+*** Estendi il disco virtuale
+*** Modificare le impostazioni del dispositivo
+*** Rimuovere il disco
+*** Reimposta le informazioni guest
+*** Aggiorna la compatibilità della macchina virtuale
+
+
+** Modifica inventario
++
+*** Crea da esistente
+*** Crea nuovo
+*** Sposta
+*** Registrati
+*** Rimuovi
+*** Annulla registrazione
+
+
+** Interazione
++
+*** Operazione di backup su macchina virtuale
+*** Configura i supporti CD
+*** Configura i supporti floppy
+*** Collega i dispositivi
+*** Interazione con la console
+*** Gestione del sistema operativo guest tramite API VIX
+*** Spegni
+*** Accendi
+*** Ripristina
+*** Sospendi
+
+
+** Provisioning
++
+*** Consenti l'accesso al disco
+*** Clona modello
+*** Personalizza guest
+*** Distribuisci modello
+*** Modifica specifica di personalizzazione
+*** Leggi le specifiche di personalizzazione
+
+
+** Gestione Snapshot
++
+*** Crea snapshot
+*** Rimuovi snapshot
+*** Rinomina snapshot
+*** Ripristina allo snapshot
+
+
+
+
+
+
+Ci sono tre ruoli predefiniti, come descritto di seguito.
+
+.Amministratore di NetApp ONTAP tools for VMware vSphere
+Fornisce tutti i privilegi nativi del server vCenter e i privilegi specifici degli ONTAP tools necessari per eseguire le attività principali di amministratore degli ONTAP tools for VMware vSphere.
+
+.NetApp ONTAP tools for VMware vSphere in sola lettura
+Fornisce accesso in sola lettura agli strumenti ONTAP. Questi utenti non possono eseguire alcuna azione degli strumenti ONTAP per VMware vSphere soggetta a controllo degli accessi.
+
+.Provisioning di NetApp ONTAP tools for VMware vSphere
+Fornisce alcuni dei privilegi nativi del vCenter Server e dei privilegi specifici degli ONTAP tools necessari per il provisioning dello storage. Puoi eseguire le seguenti attività:
+
+* Crea nuovi archivi dati
+* Gestisci i datastore
+
+
+
+
+[[vsphere-objects-and-ontap-storage-backends]]
+== vSphere oggetti e backend di storage ONTAP
+
+I due ambienti RBAC lavorano insieme. Quando esegui un'attività nell'interfaccia client di vSphere, vengono prima verificati i ruoli degli ONTAP tools definiti per il vCenter Server. Se l'operazione è consentita da vSphere, vengono poi esaminati i privilegi del ruolo ONTAP. Questo secondo passaggio viene eseguito in base al ruolo ONTAP assegnato all'utente quando è stato creato e configurato il backend di storage.
+
+
+
+[[working-with-vcenter-server-rbac]]
+== Lavorare con RBAC del server vCenter
+
+Ci sono alcuni aspetti da considerare quando lavori con i privilegi e le autorizzazioni del server vCenter.
+
+
+
+[[required-privileges]]
+=== Privilegi richiesti
+
+Per accedere all'interfaccia utente di ONTAP tools for VMware vSphere 10, devi avere il privilegio _View_ specifico di ONTAP tools. Se accedi a vSphere senza questo privilegio e fai clic sull'icona NetApp, ONTAP tools for VMware vSphere mostra un messaggio di errore e ti impedisce di accedere all'interfaccia utente.
+
+Il livello di assegnazione nella gerarchia degli oggetti vSphere determina a quali parti dell'interfaccia utente puoi accedere. Assegnando il privilegio di visualizzazione all'oggetto radice, puoi accedere a ONTAP tools for VMware vSphere facendo clic sull'icona NetApp.
+
+Puoi invece assegnare il privilegio di visualizzazione a un altro livello di oggetto vSphere inferiore. Tuttavia, questo limiterà i menu di ONTAP tools for VMware vSphere a cui puoi accedere e che puoi usare.
+
+
+
+[[assigning-permissions]]
+=== Assegnare le autorizzazioni
+
+Devi usare le autorizzazioni del server vCenter se vuoi limitare l'accesso agli oggetti e alle attività di vSphere. Il punto in cui assegni le autorizzazioni nella gerarchia degli oggetti di vSphere determina quali attività di ONTAP tools for VMware vSphere 10 gli utenti possono eseguire.
+
+
+TIP: A meno che tu non abbia bisogno di definire un accesso più restrittivo, di solito è una buona pratica assegnare le autorizzazioni a livello di oggetto radice o di cartella radice.
+
+Le autorizzazioni disponibili con ONTAP tools for VMware vSphere 10 si applicano a oggetti personalizzati non-vSphere, come i sistemi storage. Se possibile, dovresti assegnare queste autorizzazioni all’oggetto radice di ONTAP tools for VMware vSphere perché non esiste un oggetto vSphere a cui puoi assegnarle. Ad esempio, qualsiasi autorizzazione che includa il privilegio "Aggiungi/Modifica/Rimuovi sistemi storage" di ONTAP tools for VMware vSphere dovrebbe essere assegnata a livello dell’oggetto radice.
+
+Quando definisci un'autorizzazione a un livello superiore nella gerarchia degli oggetti, puoi configurarla in modo che venga trasmessa ed ereditata dagli oggetti figlio. Se serve, puoi assegnare autorizzazioni aggiuntive agli oggetti figlio che sovrascrivono quelle ereditate dal genitore.
+
+Puoi modificare un'autorizzazione in qualsiasi momento. Se cambi uno qualsiasi dei privilegi all'interno di un'autorizzazione, gli utenti associati all'autorizzazione devono disconnettersi da vSphere e accedere di nuovo per rendere effettiva la modifica.

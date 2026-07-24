@@ -1,0 +1,265 @@
+---
+permalink: deploy/prerequisites.html 
+sidebar: sidebar 
+keywords: ONTAP tools,Storage Replication Adapter 
+summary: Prima di distribuire gli ONTAP tools for VMware vSphere, dovresti conoscere i requisiti di spazio per il pacchetto di distribuzione e alcuni requisiti di base del sistema host. 
+---
+= Requisiti e limiti di configurazione di ONTAP tools per VMware vSphere
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di distribuire gli ONTAP tools for VMware vSphere, dovresti conoscere i requisiti di spazio per il pacchetto di distribuzione e alcuni requisiti di base del sistema host.
+
+È possibile utilizzare ONTAP tools for VMware vSphere con VMware vCenter Server Virtual Appliance (vCSA). È necessario distribuire ONTAP tools for VMware vSphere in un ambiente vSphere supportato che includa host ESXi.
+
+
+
+[[system-requirements]]
+== Requisiti di sistema
+
+* *Requisiti di spazio del pacchetto di installazione per nodo*
++
+** 15 GB per installazioni thin provisioned
+** 348 GB per installazioni con provisioning completo
+
+
+* *Requisiti di dimensionamento del sistema host* La tabella seguente mostra la memoria consigliata per ogni dimensione di implementazione. Per le implementazioni ad alta disponibilità (HA), ti serve una quantità di memoria pari al triplo della dimensione dell'appliance indicata.
+
+
+|===
+
+
+| *Tipo di deployment* | *CPU per nodo* | *Memoria (GB) per nodo* | *Spazio su disco (GB) con provisioning statico per nodo* 
+
+
+| Piccolo | 9 | 18 | 350 
+
+
+| Medio | 13 | 26 | 350 
+
+
+| Nota importante: la distribuzione su larga scala è solo per la configurazione HA. | 17 | 34 | 350 
+|===
+
+NOTE: Quando il backup è abilitato, ogni cluster ONTAP tools necessita di ulteriori 50 GB di spazio sul datastore in cui sono distribuite le VM. Pertanto, la configurazione non HA richiede 400 GB e la configurazione HA richiede 1100 GB di spazio in totale.
+
+
+
+[[minimum-storage-and-application-requirements]]
+== Requisiti minimi di archiviazione e applicazione
+
+|===
+| Archiviazione, host e applicazioni | Requisiti di versione 
+
+
+| ONTAP | 9.15.1, 9.16.1, e 9.17.0 
+
+
+| Host ESXi supportati da ONTAP tools | Dalla versione 7.0.3 in poi 
+
+
+| Strumenti ONTAP supportati vCenter Server | Dalla versione 7.0U3 in poi 
+
+
+| VASA Provider | 3,0 
+
+
+| Applicazione OVA | 10,5 
+
+
+| Host ESXi per distribuire la macchina virtuale ONTAP tools | 7.0U3 e 8.0U3 
+
+
+| vCenter Server per distribuire la macchina virtuale di ONTAP tools | 7.0 e 8.0 
+|===
+
+NOTE: A partire da ONTAP tools for VMware vSphere 10.4, l'hardware della macchina virtuale viene cambiato dalla versione 10 alla 17.
+
+Lo strumento Interoperability Matrix Tool (IMT) contiene le informazioni più recenti sulle versioni supportate di ONTAP, vCenter Server, host ESXi e applicazioni plug-in.
+
+https://imt.netapp.com/matrix/imt.jsp?components=105475;&solution=1777&isHWU&src=IMT["Strumento Interoperability Matrix Tool"^]
+
+
+
+[[port-requirements]]
+== Requisiti delle porte
+
+La tabella seguente illustra le porte di rete che NetApp utilizza e i loro scopi. Esistono tre diversi tipi di porte:
+
+* Porte esterne: Queste porte sono accessibili dall'esterno del cluster o del nodo Kubernetes. Consentono ai servizi di comunicare con reti o utenti esterni, permettendo l'integrazione con sistemi esterni all'ambiente del cluster.
+* Porte inter-nodo: queste porte consentono la comunicazione tra i nodi all'interno del cluster Kubernetes. Sono necessarie per attività del cluster come la condivisione dei dati e la collaborazione. Per le implementazioni a nodo singolo, le porte inter-nodo vengono utilizzate solo all'interno del nodo e non necessitano di accesso esterno. Le porte inter-nodo possono accettare traffico dall'esterno del cluster. Blocca l'accesso a Internet alle porte inter-nodo tramite regole firewall.
+* Porte interne: queste porte comunicano all'interno del cluster Kubernetes utilizzando indirizzi ClusterIP. Non sono esposte esternamente e non è necessario aggiungerle alle regole del firewall.
+
+
+
+NOTE: Assicurati che tutti i nodi di ONTAP tools risiedano sulla stessa sottorete per mantenere una comunicazione ininterrotta tra loro.
+
+Fai clic per espandere o comprimere la tabella dei requisiti della porta.
+
+[%collapsible]
+====
+|===
+| *Nome servizio/componente* | *Porta* | *Protocollo* | *Tipo di porta* | *Descrizione* 
+
+
+| ntv-gateway-svc (LB) | 443, 8443 | TCP | Esterno | Porta di transito per le comunicazioni in entrata relative al servizio VASA Provider. Il certificato autofirmato del VASA Provider e il certificato CA personalizzato sono ospitati su questa porta. 
+
+
+| SSH | 22 | TCP | Esterno | Secure Shell per l'accesso al server remoto e l'esecuzione di comandi. 
+
+
+| server rke2 | 9345 | TCP | Inter-nodo | API di supervisione RKE2 (Limita alle reti attendibili). 
+
+
+| kube-apiserver | 6443 | TCP | Inter-nodo | Porta del server API di Kubernetes (limita alle reti attendibili). 
+
+
+| rpcbind/portmapper | 111 | TCP/UDP | Inter-nodo | Utilizzato per la comunicazione RPC tra i servizi. 
+
+
+| coredns (DNS) | 53 | TCP/UDP | Inter-nodo | Servizio DNS (Domain Name System) per la risoluzione dei nomi all'interno del cluster. 
+
+
+| NTP | 123 | UDP | Inter-nodo | Network Time Protocol (NTP) per la sincronizzazione dell'ora. 
+
+
+| etcd | 2379, 2380, 2381 | TCP | Inter-nodo | Archivio chiave-valore per i dati del cluster. 
+
+
+| kube-vip | 2112 | TCP | Inter-nodo | Porta del server API di Kubernetes. 
+
+
+| kubelet | 10248, 10250 | TCP | Inter-nodo | Componente Kubernetes 
+
+
+| kube-controller | 10257 | TCP | Inter-nodo | Componente Kubernetes 
+
+
+| cloud-controller | 10258 | TCP | Inter-nodo | Componente Kubernetes 
+
+
+| kube-scheduler | 10259 | TCP | Inter-nodo | Componente Kubernetes 
+
+
+| kube-proxy | 10249, 10256 | TCP | Inter-nodo | Componente Kubernetes 
+
+
+| calico-node | 9091, 9099 | TCP | Inter-nodo | Componente di rete Calico. 
+
+
+| containerd | 10010 | TCP | Inter-nodo | Servizio demone del container. 
+
+
+| VXLAN (Flannel) | 8472 | UDP | Inter-nodo | Rete overlay per la comunicazione tra i pod. 
+|===
+
+NOTE: Per le implementazioni HA, assicurati che la porta UDP 8472 sia aperta tra tutti i nodi. Questa porta consente la comunicazione tra i pod dei nodi; se la blocchi, interromperai la comunicazione di rete tra i nodi.
+
+====
+
+
+[[configuration-limits-to-deploy-ontap-tools-for-vmware-vsphere-for-vvols-datastores]]
+== Limiti di configurazione per distribuire ONTAP tools for VMware vSphere per vVols datastores
+
+È possibile utilizzare la seguente tabella come guida per la configurazione di ONTAP tools for VMware vSphere.
+
+|===
+
+
+| *Deployment* | *Tipo* | *Numero di vVols* | *Numero di host* 
+
+
+| Non-HA | Piccolo (S) | fino a 12K | 32 
+
+
+| Non-HA | Medio (M) | fino a 24K | 64 
+
+
+| Alta disponibilità | Piccolo (S) | fino a 24K | 64 
+
+
+| Alta disponibilità | Medio (M) | fino a 50k | 128 
+
+
+| Alta disponibilità | Grande (L) | fino a 100k | 256 
+|===
+
+NOTE: I conteggi degli host nella tabella rappresentano il totale combinato tra tutti i vCenters connessi.
+
+
+
+[[configuration-limits-to-deploy-ontap-tools-for-vmware-vsphere-for-vmfs-and-nfs-datastores]]
+== Limiti di configurazione per distribuire ONTAP tools for VMware vSphere per datastore VMFS e NFS
+
+I limiti di configurazione elencati in questa sezione sono convalidati e supportati da NetApp. I limiti effettivi possono variare a seconda dell'ambiente e del carico di lavoro. Il superamento di questi limiti può influire sulle prestazioni o sul supporto e non è consigliato. Considerare quanto segue quando si esamina la tabella:
+
+* Il Disaster Recovery (DR) delle macchine virtuali è configurato utilizzando criteri sincroni, asincroni o di sincronizzazione rigorosa. Il DR non è supportato per il protocollo NVMe.
+* La protezione del cluster host ESXi utilizza SnapMirror Active Sync, che non supporta distribuzioni multi-vCenter.
+* ONTAP tools limita solo il numero di host ESXi e datastore in base alle dimensioni dell'implementazione. Non ci sono restrizioni sul numero di vCenter Server che possono essere connessi a ONTAP tools.
+* ONTAP tools esegue il discovery parallelo di tutti gli oggetti di storage. I limiti di configurazione per gli oggetti di storage ONTAP si applicano indipendentemente dal numero di oggetti attivamente in uso.
+* ONTAP tools non impone un limite al numero di vCenter Servers che possono essere integrati. I limiti di configurazione sono determinati dal numero di host e datastore supportati, come dettagliato nella tabella seguente.
+
+
+|===
+| Distribuzione | Numero di datastore VMFS e NFS | Numero di datastore VMFS con DR abilitato | Numero di host 
+
+
+| Non-HA Piccolo | 200 | 80 | 32 
+
+
+| Non-HA medio | 250 | 100 | 32 
+
+
+| HA Small | 350 | 200 | 64 
+
+
+| HA Medium | 600 | 200 | 128 
+
+
+| HA Large | 1024 | 250 | 256 
+|===
+
+
+[[ontap-tools-for-vmware-vsphere-storage-replication-adapter-sra]]
+== ONTAP tools for VMware vSphere - Storage Replication Adapter (SRA)
+
+La tabella seguente mostra i numeri supportati per ogni istanza di VMware Live Site Recovery utilizzando ONTAP tools for VMware vSphere.
+
+|===
+| *Dimensioni del deployment vCenter* | *Piccolo* | *Medio* 
+
+
+| Numero totale di macchine virtuali configurate per la protezione tramite replica basata su array | 2000 | 5000 
+
+
+| Numero totale di gruppi di protezione basati su array per la replica | 250 | 250 
+
+
+| Numero totale di gruppi di protezione per piano di recovery | 50 | 50 
+
+
+| Numero di datastore replicati | 255 | 255 
+
+
+| Numero di VM | 4000 | 7000 
+|===
+La tabella seguente mostra il numero di istanze di VMware Live Site Recovery e la corrispondente dimensione di implementazione di ONTAP tools for VMware vSphere.
+
+|===
+
+
+| *Numero di istanze di VMware Live Site Recovery* | *Dimensioni di deployment degli ONTAP tools* 
+
+
+| Fino a 4 | Piccolo 
+
+
+| da 4 a 8 | Medio 
+
+
+| Più di 8 | Grande 
+|===
+Per ulteriori informazioni, consulta  https://techdocs.broadcom.com/us/en/vmware-cis/live-recovery/live-site-recovery/9-0/overview/site-recovery-manager-system-requirements/operational-limits-of-site-recovery-manager.html["Limiti operativi di VMware Live Site Recovery"].

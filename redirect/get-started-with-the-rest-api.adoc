@@ -1,0 +1,8 @@
+---
+permalink: automation/get-started-with-the-rest-api.html 
+redirect: ontap-tools-vmware-vsphere-10/automation/learn-rest-api.html 
+---
+= 
+:allow-uri-read: 
+
+

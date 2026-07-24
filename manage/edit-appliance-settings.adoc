@@ -1,0 +1,61 @@
+---
+permalink: manage/edit-appliance-settings.html 
+sidebar: sidebar 
+keywords:  
+summary: 'Puoi cambiare la password dell"amministratore usando ONTAP tools Manager.' 
+---
+= Modificare le impostazioni dell'appliance ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Usa ONTAP tools Manager per scalare la configurazione di ONTAP tools for VMware vSphere, aumentando il numero di nodi oppure abilitando l'High Availability (HA). Per impostazione predefinita, l'appliance ONTAP tools for VMware vSphere viene distribuita come configurazione a nodo singolo, non-HA.
+
+.Prima di iniziare
+* Assicurati che il tuo modello OVA abbia la stessa versione OVA del Node 1. Il Node 1 è il nodo predefinito in cui l'OVA degli ONTAP tools for VMware vSphere viene inizialmente distribuito.
+* Assicurati che le funzioni di hot add della CPU e hot plug della memoria siano abilitate.
+* Nel vCenter Server, imposta il livello di automazione del Disaster Recovery Service (DRS) su parzialmente automatizzato. Dopo aver implementato HA, riportalo su completamente automatizzato.
+* I nomi host dei nodi nella configurazione HA devono essere in minuscolo.
+
+
+.Passaggi
+. Avvia ONTAP tools Manager da un browser web: `\https://<ONTAPtoolsIP>:8443/virtualization/ui/`
+. Accedi con le credenziali di amministratore degli ONTAP tools for VMware vSphere che hai fornito durante la distribuzione.
+. Nella sezione Panoramica, seleziona *Modifica impostazioni dell'appliance*.
+. Nella sezione *Configurazione*, aumenta la dimensione del nodo e abilita la configurazione HA. Usa le credenziali del server vCenter per apportare modifiche.
++
+Nella configurazione HA, puoi modificare i dettagli dell'archivio di contenuti. Inserisci la password per ogni modifica.
+
++
+
+NOTE: In ONTAP tools for VMware vSphere, puoi solo aumentare le dimensioni del nodo; non puoi ridurle. In una configurazione non HA, è supportata solo una configurazione di medie dimensioni. In una configurazione HA, sono supportate configurazioni di medie e grandi dimensioni.
+
+. Usa il pulsante di attivazione/disattivazione HA per abilitare la configurazione HA. Nella pagina *Impostazioni HA*, assicurati che:
++
+** L'archivio di contenuti appartiene allo stesso vCenter Server in cui sono in esecuzione le VM dei nodi di ONTAP tools. Le credenziali del vCenter Server vengono utilizzate per convalidare e scaricare il template OVA per le modifiche all'appliance.
+** La macchina virtuale che ospita gli ONTAP tools non viene distribuita direttamente su un host ESXi. La VM deve essere distribuita su un cluster o un pool di risorse.
++
+
+NOTE: Una volta abilitata la configurazione HA, non puoi tornare a una configurazione a nodo singolo non HA.
+
+
+
+. Nella sezione *Impostazioni HA* della finestra *Modifica impostazioni appliance*, puoi inserire i dettagli dei nodi 2 e 3. ONTAP tools per VMware vSphere supporta tre nodi in una configurazione HA.
++
+
+NOTE: Gli ONTAP tools precompilano la maggior parte delle opzioni di input con i dettagli di rete del Nodo 1 per semplificare il flusso di lavoro. Puoi modificare i dati di input prima di andare all'ultima pagina della procedura guidata. Puoi inserire i dettagli dell'indirizzo IPv6 per gli altri due nodi solo quando l'indirizzo IPv6 è abilitato sul nodo di gestione degli ONTAP tools.
+
++
+Assicurati che ogni host ESXi contenga solo una macchina virtuale ONTAP tools. Gli input vengono convalidati ogni volta che passi alla finestra successiva.
+
+. Rivedi i dettagli nella sezione *Riepilogo* e *Salva* le modifiche.
+
+
+.E ora?
+La pagina *Panoramica* mostra lo stato della distribuzione. Puoi anche monitorare lo stato del job di modifica delle impostazioni dell'appliance dalla vista dei job usando l'ID del job.
+
+Se la distribuzione HA non riesce e lo stato del nuovo nodo è "Nuovo", elimina la nuova VM in vCenter prima di provare ad abilitare nuovamente HA.
+
+La scheda *Avvisi* nel pannello di sinistra elenca gli avvisi per ONTAP tools for VMware vSphere.

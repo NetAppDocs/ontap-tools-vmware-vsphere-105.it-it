@@ -1,0 +1,46 @@
+---
+permalink: configure/dashboard-overview.html 
+sidebar: sidebar 
+keywords: user roles 
+summary: 'Quando si seleziona l"icona del plug-in ONTAP tools for VMware vSphere nella sezione dei collegamenti rapidi sul client vCenter, l"interfaccia utente viene indirizzata alla pagina di panoramica. Questa pagina funge da dashboard, fornendo un riepilogo del plug-in ONTAP tools for VMware vSphere.' 
+---
+= Scopri la dashboard degli strumenti ONTAP
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Selezionando l'icona del plug-in ONTAP tools per VMware vSphere dalla sezione dei collegamenti rapidi nel client vCenter si apre la pagina di panoramica. Questa dashboard fornisce un riepilogo del plug-in ONTAP tools per VMware vSphere.
+
+In modalità Enhanced Linked Mode (ELM), viene visualizzato il menu a tendina vCenter Server. Scegli un vCenter Server per visualizzarne i dati. Il menu a tendina è disponibile in tutte le visualizzazioni elenco del plug-in. Quando selezioni un vCenter Server in una pagina, la selezione rimane invariata anche quando cambi scheda nel plug-in. image:../media/remote-plugin-dashboard.png["Panoramica dashboard"]
+
+Dalla pagina di panoramica, puoi eseguire l'azione *Rilevamento*. L'azione di rilevamento individua i backend di storage, gli host, i datastore e lo stato o le relazioni di protezione aggiunti o aggiornati di recente a livello di vCenter. Esegui il rilevamento su richiesta senza attendere quello pianificato.
+
+
+NOTE: Il pulsante *Rilevamento* è abilitato solo se si dispone del privilegio necessario per eseguire il rilevamento.
+
+Dopo aver inviato la richiesta di rilevamento, puoi monitorare lo stato di avanzamento dell'azione nel pannello delle attività recenti.
+
+Il pannello di controllo contiene diverse schede che mostrano differenti elementi del sistema. La tabella seguente mostra le diverse schede e cosa rappresentano.
+
+|===
+
+
+| *Scheda* | *Descrizione* 
+
+
+| Stato | La scheda Stato mostra il numero di backend di archiviazione e lo stato di salute generale dei backend di archiviazione e del VASA Provider. Lo stato dei backend di archiviazione viene visualizzato come *Integro* quando tutti gli stati dei backend di archiviazione sono normali e come *Non integro* se uno qualsiasi dei backend di archiviazione presenta un problema (stato Sconosciuto/Irraggiungibile/Degradato). Seleziona il tool tip per aprire i dettagli sullo stato dei backend di archiviazione. Puoi selezionare qualsiasi backend di archiviazione per maggiori dettagli. Il collegamento *Altri stati del VASA Provider* mostra lo stato corrente del VASA Provider registrato nel vCenter Server. 
+
+
+| Backend di storage - Capacità | Questa scheda mostra la capacità aggregata utilizzata e disponibile di tutti i backend di storage per l'istanza del server vCenter selezionata. Per i sistemi di storage ASA r2, i dati relativi alla capacità non vengono visualizzati perché lo storage è disaggregato. 
+
+
+| Macchine virtuali | Questa scheda mostra le 10 migliori VM ordinate in base a una metrica di prestazioni. Puoi selezionare l'intestazione per visualizzare le 10 migliori VM per la metrica selezionata, ordinate in ordine crescente o decrescente. Le modifiche di ordinamento e filtro apportate alla scheda persistono finché non cambi o cancelli la cache del browser. 
+
+
+| Datastore | Questa scheda mostra i 10 principali datastore ordinati in base a una metrica delle prestazioni. Puoi selezionare l'intestazione per ottenere i 10 principali datastore per la metrica selezionata, ordinati in ordine crescente o decrescente. Le modifiche di ordinamento e filtro apportate alla scheda persistono finché non cambi o cancelli la cache del browser. È presente un menu a discesa Tipo di datastore per selezionare il tipo di datastore: NFS, VMFS o vVols. 
+
+
+| Scheda di conformità host ESXi | Questa scheda mostra se tutti gli host ESXi (per il vCenter selezionato) seguono le impostazioni host consigliate NetApp per gruppo o categoria. È possibile selezionare il collegamento *Applica impostazioni consigliate* per applicare le impostazioni consigliate. È possibile selezionare lo stato di conformità degli host per visualizzare l'elenco degli host. 
+|===

@@ -1,0 +1,42 @@
+---
+permalink: concepts/ontap-tools-overview.html 
+sidebar: sidebar 
+keywords:  
+summary: 'ONTAP tools for VMware vSphere è una raccolta di strumenti per la gestione del ciclo di vita delle macchine virtuali. Si integra con l"ecosistema VMware e aiuta nel provisioning, nella protezione di base e nel disaster recovery delle macchine virtuali.' 
+---
+= Scopri gli strumenti ONTAP
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+ONTAP tools per VMware vSphere è una suite di strumenti per la gestione del ciclo di vita delle macchine virtuali. Si integra con l'ecosistema VMware per semplificare il provisioning dei datastore e fornire una protezione di base per le macchine virtuali. È una raccolta di microservizi scalabili orizzontalmente ed event-driven, distribuiti come Open Virtual Appliance (OVA).
+
+ONTAP tools per VMware vSphere supporta:
+
+* Funzionalità principali delle macchine virtuali (VM) come la protezione e il ripristino di emergenza
+* VASA Provider per la gestione dello storage basata su policy
+* Gestione basata su policy dello storage
+* Storage Replication Adapter (SRA)
+
+
+.Elevata disponibilità per ONTAP tools for VMware
+ONTAP tools for VMware vSphere offre supporto per l'alta disponibilità (HA) per aiutarti a mantenere un funzionamento ininterrotto durante i guasti.
+
+La soluzione HA ti aiuta a ripristinare rapidamente dai seguenti tipi di interruzioni:
+
+* Guasto dell'host: è supportato solo il guasto di un singolo nodo.
+* Guasto alla rete
+* Errore della macchina virtuale (guest OS)
+* Errore dell'applicazione (ONTAP tools)
+
+
+Non è necessario eseguire alcuna configurazione aggiuntiva per abilitare l'HA per ONTAP tools for VMware vSphere.
+
+[NOTE]
+====
+ONTAP tools for VMware vSphere non supporta vCenter HA.
+
+====
+Per utilizzare la funzionalità HA, assicurarsi che l'hot-add della CPU e l'hot-plug della memoria siano abilitati durante la distribuzione o nelle impostazioni della macchina virtuale.

@@ -1,0 +1,37 @@
+---
+permalink: protect/verify-the-replicated-storage-environment.html 
+sidebar: sidebar 
+keywords: SRA, storage replication adapter, storage discovery, SnapMirror, custom policy, array pairing, VMware Live Site Recovery 
+summary: 'Dopo aver configurato Storage Replication Adapter (SRA), dovresti verificare che il sito protetto e il sito di ripristino siano stati associati correttamente. Il sistema storage replicato deve essere rilevabile sia dal sito protetto che dal sito di ripristino.' 
+---
+= Verificare i sistemi di archiviazione replicati negli ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dovresti verificare che il sito protetto e il sito di ripristino siano stati associati correttamente dopo aver configurato Storage Replication Adapter (SRA). Il sistema storage replicato deve essere rilevabile sia dal sito protetto che dal sito di ripristino.
+
+.Prima di iniziare
+* Dovresti aver configurato il tuo sistema storage.
+* Dovresti aver associato il sito protetto e il sito di ripristino utilizzando VMware Live Site Recovery array manager.
+* Dovresti aver abilitato la licenza FlexClone e la licenza SnapMirror prima di eseguire l'operazione di test failover e l'operazione di failover per SRA.
+* Dovresti avere le stesse politiche e pianificazioni SnapMirror sia sul sito di origine che su quello di destinazione.
+* Se si utilizzano criteri SnapMirror personalizzati con una pianificazione personalizzata, è necessario configurare la stessa pianificazione e gli stessi criteri sia sul sito protetto che su quello di ripristino.
+* Se si utilizzano criteri SnapMirror personalizzati (con pianificazione predefinita o personalizzata), è necessario eseguire il rilevamento dello storage dagli strumenti ONTAP affinché il nuovo criterio venga riconosciuto. In caso contrario, i flussi di lavoro SRA, inclusi il failover di test e il failover effettivo, non andranno a buon fine. Eseguire il rilevamento dello storage nei seguenti punti:
++
+** Dopo aver creato i criteri personalizzati sul sito di ripristino.
+** Dopo un'operazione di riprotezione, che ricrea i criteri sul sito protetto.
+
+
+
+
+.Passaggi
+. Accedi al tuo vCenter Server.
+. Vai su *Ripristino del sito* > *Replica basata su array*.
+. Seleziona la coppia di array richiesta e verifica i dettagli corrispondenti.
++
+I sistemi di archiviazione dovrebbero essere rilevati nel sito protetto e nel sito di ripristino con lo stato *Enabled*.
+
+

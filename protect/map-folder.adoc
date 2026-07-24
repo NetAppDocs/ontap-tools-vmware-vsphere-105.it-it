@@ -1,0 +1,34 @@
+---
+permalink: protect/map-folder.html 
+sidebar: sidebar 
+keywords:  
+summary: Dovresti mappare le cartelle sul sito protetto e sul sito di recovery per abilitare la comunicazione tra di loro. 
+---
+= Configurare i mapping delle cartelle negli ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dovresti mappare le cartelle sul sito protetto e sul sito di recovery per abilitare la comunicazione tra di loro.
+
+.Prima di iniziare
+Dovresti aver collegato i siti protetto e di recovery.
+
+.Passaggi
+. Accedi al vCenter Server e seleziona *Ripristino del sito* > *Siti*.
+. Seleziona il tuo sito protetto e seleziona *Gestisci*.
+. Seleziona *Mappature cartelle* > icona *Cartella* nella scheda Gestisci per creare una nuova mappatura di cartella.
+. Nella procedura guidata Crea mappatura cartelle, esegui le seguenti operazioni:
++
+.. Seleziona *Prepara automaticamente le mappature per le cartelle con nomi corrispondenti* e seleziona *Avanti*.
+.. Seleziona gli oggetti del data center necessari per i siti protetti e di recovery e seleziona *Aggiungi mappature*.
+.. Seleziona *Avanti* dopo che le mappature sono state create con successo.
+.. Seleziona l'oggetto utilizzato in precedenza per creare la mappatura inversa e poi seleziona *Finish*.
+
+
+
+
+.Risultato
+La pagina Mappature cartelle visualizza le risorse del sito protetto e le risorse del sito di ripristino. È possibile seguire gli stessi passaggi per le altre cartelle presenti nell'ambiente.

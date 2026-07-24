@@ -1,0 +1,8 @@
+---
+section: upgrade
+title: Aggiorna ONTAP tools per VMware vSphere
+entries:
+- title: Aggiorna da ONTAP tools for VMware vSphere 10.x a 10.5
+  url: "/upgrade/upgrade-ontap-tools.html"
+- title: Codici di errore di upgrade
+  url: "/upgrade/upgrade-error-codes.html"

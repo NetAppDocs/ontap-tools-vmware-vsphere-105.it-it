@@ -1,0 +1,77 @@
+---
+permalink: manage/maintenance-console.html 
+sidebar: sidebar 
+keywords:  
+summary: 'Puoi gestire le configurazioni di applicazione, sistema e rete usando la console di manutenzione degli ONTAP tools. Puoi cambiare la password dell"amministratore e la password di manutenzione. Puoi anche generare pacchetti di supporto, impostare diversi livelli di log, visualizzare e gestire le configurazioni TLS e avviare la diagnostica remota.' 
+---
+= Scopri la console di manutenzione di ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+La console di manutenzione per ONTAP tools for VMware vSphere ti permette di gestire le impostazioni di applicazione, sistema e rete. Puoi aggiornare le password di amministratore e di manutenzione, generare pacchetti di supporto, configurare i livelli di log, gestire le impostazioni TLS e abilitare la diagnostica remota.
+
+Dopo aver distribuito ONTAP tools for VMware vSphere, se la console di manutenzione non è accessibile, installa VMware tools dal vCenter Server. Accedi utilizzando il `maint` nome utente e la password impostati durante la distribuzione. Usa *nano* per modificare i file nella console di manutenzione o nella console di accesso root.
+
+
+NOTE: Dovresti impostare una password per l' `diag`utente mentre abiliti la diagnostica remota.
+
+Dovresti usare la scheda *Riepilogo* degli ONTAP tools for VMware vSphere distribuiti per accedere alla console di manutenzione. Quando selezioni image:../media/launch-maintenance-console.gif["Pulsante di riproduzione"], si avvia la console di manutenzione.
+
+|===
+
+
+| *Menu della console* | *Opzioni* 
+
+
+ a| 
+Configurazione dell'applicazione
+ a| 
+. Visualizza il riepilogo dello stato del server
+. Modifica il livello di LOG per i servizi degli ONTAP tools
+. Modifica il flag di convalida del certificato
+
+
+
+
+ a| 
+Configurazione del sistema
+ a| 
+. Riavvia la macchina virtuale
+. Arresta la macchina virtuale
+. Modifica la password dell'utente "maint"
+. Cambia fuso orario
+. Aumenta la dimensione del disco della jail (/jail)
+. Aggiornamento
+. Installa VMware Tools
+
+
+
+
+ a| 
+Configurazione di rete
+ a| 
+. Visualizza le impostazioni dell'indirizzo IP
+. Visualizza le impostazioni di ricerca del domain name
+. Modifica le impostazioni di ricerca del domain name
+. Visualizza percorsi statici
+. Modifica i percorsi statici
+. Conferma le modifiche
+. Esegui il ping di un host
+. Ripristina le impostazioni predefinite
+
+
+
+
+ a| 
+Supporto e diagnostica
+ a| 
+. Accedi alla shell diagnostica
+. Abilita l'accesso diagnostico remoto
+. Fornisci le credenziali vCenter per il backup
+. Esegui un backup
+
+
+|===

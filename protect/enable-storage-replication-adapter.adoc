@@ -1,0 +1,42 @@
+---
+permalink: protect/enable-storage-replication-adapter.html 
+sidebar: sidebar 
+keywords:  
+summary: ONTAP tools for VMware vSphere offre la possibilità di abilitare la funzionalità SRA per configurare il disaster recovery. 
+---
+= Configurare SRA negli ONTAP tools per proteggere i datastore
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+ONTAP tools for VMware vSphere offre la possibilità di abilitare la funzionalità SRA per configurare il disaster recovery.
+
+.Prima di iniziare
+* Dovresti aver già configurato la tua istanza del server vCenter e gli host ESXi.
+* Dovresti aver implementato ONTAP tools for VMware vSphere.
+* Dovresti aver scaricato il file dell'adattatore SRA `.tar.gz` dal https://mysupport.netapp.com/site/products/all/details/otv10/downloads-tab["Sito di supporto NetApp"^].
+* Dovresti avere le stesse pianificazioni personalizzate di SnapMirror sia sul cluster ONTAP di origine che su quello di destinazione prima di eseguire i flussi di lavoro SRA.
+* link:../manage/enable-services.html["Abilita i servizi di ONTAP tools per VMware vSphere"] per abilitare la funzionalità SRA.
+
+
+.Passaggi
+. Accedi all'interfaccia di gestione dell'appliance VMware Live Site Recovery utilizzando l'URL: `\https://<srm_ip>:5480`, quindi vai su Storage Replication Adapters nell'interfaccia di gestione dell'appliance VMware Live Site Recovery.
+. Seleziona *Nuovo adattatore*.
+. Carica il file di installazione _.tar.gz_ del plug-in SRA su VMware Live Site Recovery.
+. Esegui una nuova scansione degli adattatori per verificare che i dettagli siano aggiornati nella pagina Adattatori di replica dello storage di VMware Live Site Recovery.
+
+
+
+NOTE: Dopo un failover, azioni come espansione, montaggio ed eliminazione potrebbero non essere disponibili per i datastore. Esegui l'individuazione del datastore per aggiornare e visualizzare le azioni appropriate del menu contestuale.
+
+
+NOTE: Dopo ogni operazione di riprotezione, devi eseguire la rilevazione dello storage su entrambi i siti.
+
+In una nuova configurazione con protezione SRA, esegui sempre un failover di prova. Saltare il failover di prova potrebbe causare il fallimento dell'operazione di riprotezione.
+
+In una configurazione fan-out, dopo un failover Active Sync di SnapMirror in cui la fonte di SnapMirror passa al sito B per Automated Failover Duplex e Asynchronous SnapMirror, esegui un test failover tra i siti B e C. Saltare questo passaggio può causare un errore nell'operazione di riprotezione.
+
+.Informazioni correlate
+https://docs.netapp.com/us-en/netapp-solutions-virtualization/vmware/vmw-nfs-vlsr.html#scenario-overview["Configura il disaster recovery per i datastore NFS usando VMware Site Recovery Manager"]

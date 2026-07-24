@@ -1,0 +1,25 @@
+---
+permalink: manage/delete-deployment.html 
+sidebar: sidebar 
+keywords: ONTAP tools,Storage Replication Adapter 
+summary: Quando usi un cluster ONTAP dedicato per la distribuzione di ONTAP tools for VMware, vengono creati molti volumi FlexVol inutilizzati. Dopo aver rimosso ONTAP tools for VMware vSphere, dovresti rimuovere i volumi FlexVol per evitare possibili impatti sulle prestazioni. 
+---
+= Rimuovere i volumi FlexVol dopo aver disinstallato ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando usi un cluster ONTAP dedicato per la distribuzione di ONTAP tools for VMware, vengono creati molti volumi FlexVol inutilizzati. Dopo aver rimosso ONTAP tools for VMware vSphere, dovresti rimuovere i volumi FlexVol per evitare possibili impatti sulle prestazioni.
+
+.Passaggi
+. Scopri il tipo di distribuzione degli ONTAP tools for VMware vSphere dalla VM del nodo di gestione degli ONTAP tools. Esegui il seguente comando per verificare il tipo di distribuzione: _cat /opt/netapp/meta/ansible_vars.yaml | grep -i protocol_
++
+Se si tratta di una distribuzione iSCSI, elimina anche gli igroup.
+
+. Ottieni l'elenco dei volumi FlexVol. _kubectl describe persistentvolumes | grep internalName | awk -F'=' '{print $2}'_
+. Rimuovere le VM dal vCenter Server. Consulta  https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/8-0/vsphere-virtual-machine-administration-guide-8-0/managing-virtual-machinesvsphere-vm-admin/adding-and-removing-virtual-machinesvsphere-vm-admin.html#GUID-376174FE-F936-4BE4-B8C2-48EED42F110B-en["Rimuovi e registra nuovamente le macchine virtuali e i modelli di macchine virtuali"].
+. Elimina i volumi FlexVol. Consulta  https://docs.netapp.com/us-en/ontap/volumes/delete-flexvol-task.html["Elimina un volume FlexVol"]. Inserisci il nome esatto del volume FlexVol nel comando CLI per eliminare un volume.
+. Eliminare gli igroup SAN dal sistema storage ONTAP in caso di implementazione iSCSI. Consulta  https://docs.netapp.com/us-en/ontap/san-admin/manage-san-initiators-task.html["Visualizza e gestisci gli iniziatori SAN e gli igroups"].
+

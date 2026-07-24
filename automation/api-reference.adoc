@@ -1,0 +1,33 @@
+---
+sidebar: sidebar 
+permalink: automation/api-reference.html 
+keywords: ontap tools for vmware vsphere rest api reference, api reference 
+summary: La documentazione di riferimento delle API REST di ONTAP tools for VMware vSphere 10 contiene i dettagli relativi a tutte le chiamate API. Questa documentazione è utile quando sviluppi applicazioni di automazione. 
+---
+= Riferimento API REST di ONTAP tools
+:hardbreaks:
+:allow-uri-read: 
+:nofooter: 
+:icons: font
+:linkattrs: 
+:imagesdir: ../media/
+
+
+[role="lead"]
+La documentazione di riferimento delle API REST di ONTAP tools for VMware vSphere 10 contiene i dettagli relativi a tutte le chiamate API. Questa documentazione è utile quando sviluppi applicazioni di automazione.
+
+Puoi accedere alla documentazione dell'API REST di ONTAP tools for VMware vSphere 10 online tramite l'interfaccia utente Swagger. Ti serve l'indirizzo IP o il fully qualified domain name (FQDN) del servizio gateway di ONTAP tools for VMware vSphere 10, oltre alla porta.
+
+.Passaggi
+. Digita il seguente URL nel tuo browser, sostituendo l'indirizzo IP e la porta appropriati con la variabile, e premi *Enter*.
++
+`\https://$FQDN_IP_PORT/`
+
++
+*Esempio*
+
++
+`\https://10.61.25.33:8443/`
+
+. Come esempio di una singola chiamata API, scorri verso il basso fino alla categoria *vCenters* e seleziona *GET* accanto all'endpoint `/virtualization/api/v1/vcenters`
+

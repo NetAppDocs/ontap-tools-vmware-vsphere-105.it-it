@@ -1,0 +1,55 @@
+---
+permalink: release-notes/whats-new.html 
+sidebar: sidebar 
+keywords: 'what"s new, release notes, 10.5, ONTAP tools for VMware vSphere' 
+summary: Scopri le nuove funzionalità disponibili in ONTAP tools for VMware vSphere 10.5. 
+---
+= Novità degli ONTAP tools per VMware vSphere 10.5
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Scopri le nuove funzionalità disponibili in ONTAP tools for VMware vSphere 10.5.
+
+* *Qualificazione della piattaforma*
+
+
+ONTAP tools for VMware vSphere 10.5 aggiunge il supporto per i sistemi ASA r2, offrendo compatibilità con le più recenti configurazioni hardware e software. Questa versione include anche l'integrazione con ONTAP 9.16.1 e 9.17.1, ampliando gli ambienti supportati.
+
+* *Qualifiche e certificazioni VMware*
+
+
+ONTAP tools for VMware vSphere 10.5 è conforme agli attuali standard di certificazione di interoperabilità VMware, supportando sia l'host ESXi che il server vCenter.
+
+* *Supporto MetroCluster*
+
+
+Questa versione introduce il supporto per le configurazioni MetroCluster, migliorando le funzionalità di alta disponibilità e ripristino di emergenza.
+
+* *Gestione della sicurezza e dei certificati*
+
+
+Questa versione introduce una gestione semplificata dei certificati autofirmati, migliorando sia l'esperienza utente che la conformità agli standard di sicurezza. Offre flussi di lavoro di convalida dei certificati ottimizzati per proteggere le comunicazioni tra ONTAP e ONTAP tools for VMware vSphere.
+
+* *Miglioramenti alla replica*
+
+
+Questa versione supporta la replica VMFS con gruppo di coerenza gerarchica, inclusi SRA e SnapMirror active sync nei sistemi ASA r2. Supporta i backup con RPO zero per migliorare la protezione e il ripristino dei dati.
+
+* *Aggiornamento e migrazione*
+
+
+Il processo di aggiornamento e migrazione dalle versioni precedenti di ONTAP tools per VMware vSphere a ONTAP tools per VMware vSphere 10.5 è progettato per essere fluido ed efficiente, riducendo al minimo i tempi di inattività e garantendo una transizione senza intoppi.
+
+
+
+[[supported-ontap-platforms-and-vcenter-server-versions]]
+== Piattaforme ONTAP e versioni del server vCenter supportate
+
+ONTAP tools for VMware vSphere 10.5 P1 supporta le configurazioni vCenter High Availability (HA) per i componenti SRA e SnapMirror active sync. vVols non è supportato in questa configurazione. Durante un failover HA, vCenter potrebbe non essere disponibile per diversi minuti. In ambienti di grandi dimensioni o in caso di errore, i tempi di failover possono superare i 15 minuti.
+
+Per ulteriori informazioni, consultare il https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/9-0/vsphere-availability/vcenter-server-high-availability.html["Documentazione di vCenter High Availability"^]. Per domande su vCenter HA, contattare https://support.broadcom.com/["Supporto Broadcom"^].
+
+Per i dettagli più recenti sulla compatibilità delle versioni, consulta  https://imt.netapp.com/matrix/imt.jsp?components=105475;&solution=1777&isHWU&src=IMT["Tool NetApp Interoperability Matrix"^].

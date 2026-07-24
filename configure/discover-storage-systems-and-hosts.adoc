@@ -1,0 +1,41 @@
+---
+permalink: configure/discover-storage-systems-and-hosts.html 
+sidebar: sidebar 
+keywords:  
+summary: Quando esegui per la prima volta ONTAP tools for VMware vSphere in un vSphere Client, ONTAP tools for VMware vSphere rileva gli host ESXi, le loro LUN e le esportazioni NFS, e i sistemi storage NetApp che possiedono tali LUN ed esportazioni. 
+---
+= Scopri i sistemi di archiviazione e gli host negli ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando ONTAP tools for VMware vSphere viene avviato nel Client vSphere per la prima volta, rileva automaticamente gli host ESXi, le relative LUN e le esportazioni NFS, nonché i sistemi storage NetApp che possiedono queste risorse.
+
+.Prima di iniziare
+* Assicurati che tutti gli host ESXi siano accesi e connessi.
+* Assicurati che tutte le macchine virtuali di storage (SVM) da rilevare siano in esecuzione e che ogni nodo del cluster abbia almeno una LIF dati configurata per il protocollo storage in uso (NFS o iSCSI).
+
+
+.Informazioni su questa attività
+Puoi individuare nuovi sistemi storage o aggiornare quelli esistenti per ottenere le ultime informazioni su capacità e configurazione. Puoi anche cambiare le credenziali di ONTAP tools for VMware vSphere per l'accesso ai sistemi storage.
+
+Durante la fase di rilevamento dei sistemi storage, ONTAP tools for VMware vSphere raccoglie informazioni dagli host ESXi gestiti dall'istanza vCenter Server.
+
+.Passaggi
+. Dalla home page del client vSphere, seleziona *Host e cluster*.
+. Fare clic con il pulsante destro del mouse sul data center desiderato e selezionare *NetApp ONTAP tools* > *Aggiorna dati host*.
++
+Nella finestra di dialogo *Conferma*, conferma la tua scelta.
+
+. Seleziona i controller di storage rilevati che hanno lo stato  `Authentication Failure` e seleziona *Azioni* > *Modifica*.
+. Inserisci le informazioni richieste nella finestra di dialogo *Modifica sistema storage*.
+. Ripeti i passaggi 4 e 5 per tutti i controller di storage con stato  `Authentication Failure`.
+
+
+Una volta completata la fase di rilevamento, esegui le seguenti azioni:
+
+* Usa ONTAP tools for VMware vSphere per configurare le impostazioni dell'host ESXi per gli host che visualizzano l'icona di avviso nella colonna delle impostazioni dell'adattatore, nella colonna delle impostazioni MPIO o nella colonna delle impostazioni NFS.
+* Fornisci le credenziali del sistema storage.
+

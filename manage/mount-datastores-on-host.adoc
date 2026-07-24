@@ -1,0 +1,40 @@
+---
+permalink: manage/mount-datastores-on-host.html 
+sidebar: sidebar 
+keywords:  
+summary: 'Il montaggio di un datastore consente accesso allo storage a host aggiuntivi. Puoi montare il datastore sugli host aggiuntivi dopo averli aggiunti all"ambiente VMware.' 
+---
+= Montare i datastore NFS e VMFS negli ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il montaggio di un datastore consente accesso allo storage a host aggiuntivi. Puoi montare il datastore sugli host aggiuntivi dopo averli aggiunti all'ambiente VMware.
+
+
+NOTE: Quando aggiungi un nuovo host ESXi usando  https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/9-0/use-quickstart-to-add---host-to-a-cluster.html["Aggiungi un host ESX al workflow del tuo cluster vSphere"], aspetta che il rilevamento host pianificato sia completato prima che venga visualizzato in ONTAP tools. In alternativa, puoi avviare manualmente il rilevamento dalla schermata di panoramica di NetApp ONTAP tools.
+
+.Informazioni su questa attività
+* Alcune azioni associate al clic destro del mouse sono disabilitate o non disponibili a seconda della versione del client vSphere e del tipo di datastore selezionato.
++
+** Se usi il client vSphere 8.0 o versioni successive, alcune delle opzioni del menu clic destro sono nascoste.
+** Dalla versione vSphere 7.0U3 alla vSphere 8.0, anche se le opzioni vengono visualizzate, l'azione sarà disabilitata.
+
+
+* vSphere disabilita l'opzione di montaggio del datastore quando il cluster è protetto con configurazioni uniformi.
+
+
+.Passaggi
+. Dalla home page del client vSphere, seleziona *Host e cluster*.
+. Nel riquadro di navigazione a sinistra, seleziona i data center che contengono gli host.
+. Per montare i datastore NFS/VMFS su un host o un cluster, fai clic con il pulsante destro del mouse e seleziona *NetApp ONTAP tools* > *Mount Datastores*.
+. Seleziona gli archivi dati che vuoi montare e seleziona *Monta*.
+
+
+.E ora?
+Puoi monitorare l'avanzamento nel pannello delle attività recenti.
+
+.Argomento correlato
+link:../manage/add-vsphere-host.html["Aggiungi nuovi host vSphere VMware"]

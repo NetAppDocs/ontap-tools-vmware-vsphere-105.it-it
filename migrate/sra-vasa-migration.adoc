@@ -1,0 +1,268 @@
+---
+permalink: migrate/sra-vasa-migration.html 
+sidebar: sidebar 
+keywords: migrate 
+summary: Durante la migrazione dei dati di storage, i backend di storage vengono integrati manualmente tramite API REST. Durante la migrazione dei dati di VASA Provider, i dati vengono esportati dal database Derby esistente e importati nel database MongoDB. 
+---
+= Migrare il VASA Provider e aggiornare l'SRA negli ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Segui i passaggi in questa sezione per migrare il VASA Provider da ONTAP tools for VMware vSphere 9.xx a ONTAP tools for VMware vSphere 10.5 e aggiornare lo Storage Replication Adapter (SRA) sull'appliance VMware Live Site Recovery.
+
+
+
+[[steps-to-migrate-the-vasa-provider]]
+== Procedura per migrare il provider VASA
+
+. Per abilitare la porta Derby 1527 sugli ONTAP tools for VMware vSphere esistenti, abilita l'utente root ed effettua l'accesso alla CLI tramite SSH. Quindi, esegui il seguente comando:
++
+[listing]
+----
+iptables -I INPUT 1 -p tcp --dport 1527 -j ACCEPT
+----
+. Distribuisci l'OVA per ONTAP tools for VMware vSphere 10.5.
+. Aggiungi l'istanza del server vCenter che vuoi migrare a ONTAP tools for VMware vSphere release 10.5. Consulta link:../configure/add-vcenter.html["Aggiungi un'istanza di vCenter Server"] per maggiori informazioni.
+. link:../manage/enable-services.html["Abilita il provider VASA"] servizio su ONTAP tools for VMware vSphere 10.5.
+. Integra localmente il backend di storage dalle API del server vCenter per il plug-in ONTAP tools. Consulta link:../configure/add-storage-backend.html["Aggiungi un backend di storage usando l'interfaccia client vSphere"] per maggiori informazioni.
+. Ottieni un token di accesso per autenticare le richieste REST API. Usa il seguente esempio, sostituendo le variabili con i valori specifici del tuo ambiente.
++
+[source, curl]
+----
+curl --request POST \
+  --location "https://$FQDN_IP_PORT/virtualization/api/v1/auth/vcenter-login" \
+  --header "Content-Type: application/json" \
+  --header "Accept: */*" \
+  -d '{"username": "$MYUSER", "password": "$MYPASSWORD", "vcenter hostname": "$MYVCENTER"}'
+----
++
+Copia e salva il token di accesso restituito nella risposta.
+
+. Esegui la seguente API da Swagger o Postman per eseguire la migrazione.
++
+[listing]
+----
+curl -X POST `\https://xx.xx.xx.xx:8443/virtualization/api/v1/vcenters/{vcguid}/migration-jobs`
+----
++
+Puoi accedere a Swagger tramite questo URL: `\https://$FQDN_IP_PORT/`, per esempio: `\https://10.67.25.33:8443/`.
+
++
+[]
+====
+*Metodo ed endpoint HTTP*
+
+Questa chiamata API REST utilizza il seguente metodo e endpoint.
+
+|===
+
+
+| *Metodo HTTP* | *Percorso* 
+
+
+| POST | /api/v1 
+|===
+*Tipo di elaborazione*
+
+Asincrono
+
+*Esempio di Curl*
+
+[listing]
+----
+curl -X POST 'https://<OTV-NG-IP>:8443/virtualization/api/v1/vcenters/<vcguid>/migration-jobs' \
+  --header 'x-auth: <auth_token>' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "otv_ip": "xx.xx.xx.xx",
+    "vasa_provider_credentials": {
+      "username": "xxxxx",
+      "password": "******"
+    },
+    "database_password": "******"
+  }'
+----
+Corpo della richiesta per la migrazione di altre release:
+
+[listing]
+----
+{
+  "otv_ip": "xx.xx.xx.xx",
+  "vasa_provider_credentials": {
+    "username": "xxxxx",
+    "password": "*******"
+  }
+}
+----
+*Esempio di output JSON*
+
+Il sistema restituisce un oggetto job. Salva l'identificativo del job per utilizzarlo nel passaggio successivo.
+
+[listing]
+----
+{
+  "id": 123,
+  "migration_id": "d50073ce-35b4-4c51-9d2e-4ce66f802c35",
+  "status": "running"
+}
+----
+====
+. Utilizza il seguente URI in Swagger per verificare lo stato:
++
+[listing]
+----
+curl `\https://xx.xx.xx.xxx:8443/virtualization/api/jobmanager/v2/jobs/<JobId>?includeSubJobsAndTasks=true`
+----
++
+Utilizzare il valore 'id' restituito dal job di migrazione nel passaggio precedente. Al termine del job, rivedere il report di migrazione nella risposta al job.
+
+. Registra il VASA Provider con ONTAP tools for VMware vSphere. Per le istruzioni, consulta link:../configure/registration-process.html["Registra il fornitore VASA"].
+. Verificare la registrazione del VASA Provider:
++
+.. Nel vSphere Client, vai al vCenter Server.
+.. Seleziona *Configura* > *Storage Providers*.
+.. Confermare che il VASA Provider registrato nel passaggio precedente risulti online.
+
+
+. Arresta ONTAP tools for VMware vSphere storage provider 9.10/9.11/9.12/9.13 VASA Provider service usando questi passaggi:
++
+.. In ONTAP tools 9.x, apri la console web.
+.. Accedi alla console di manutenzione.
+.. Premi Invio `1` per selezionare il menu *Configurazione applicazione*.
+.. Premi  `5` per interrompere i servizi VASA Provider e SRA.
+.. Nel vSphere Client, vai al vCenter Server e seleziona *Configura* > *Provider di archiviazione*.
+.. Selezionare il VASA Provider offline per ONTAP tools 9.x e selezionare *Rimuovi*.
++
+Dopo l'arresto del vecchio VASA Provider, il vCenter Server esegue il failover su ONTAP tools for VMware vSphere. Tutti i datastore e le VM diventano accessibili e sono serviti da ONTAP tools for VMware vSphere.
+
+
+
+. I datastore NFS e VMFS migrati vengono visualizzati in ONTAP tools for VMware vSphere 10.5 dopo il processo di rilevamento dei datastore, che può richiedere fino a 30 minuti. Verifica la loro visibilità nella pagina di panoramica.
+. Esegui la migrazione della patch usando la seguente API in Swagger o in Postman:
++
+[]
+====
+*Metodo ed endpoint HTTP*
+
+Questa chiamata API REST utilizza il seguente metodo e endpoint.
+
+|===
+
+
+| *Metodo HTTP* | *Percorso* 
+
+
+| PATCH | /api/v1 
+|===
+*Tipo di elaborazione*
+
+Asincrono
+
+Usa il seguente URI in Swagger:
+
+[listing]
+----
+curl  -X PATCH  `\https://xx.xx.xx.xx:8443/virtualization/api/v1/vcenters/<vcenter_id>/migration-jobs/<migration_id>`
+----
+*Metodo ed endpoint HTTP*
+
+Questa chiamata API REST utilizza il seguente metodo e endpoint.
+
+|===
+
+
+| *Metodo HTTP* | *Percorso* 
+
+
+| PATCH | /api/v1 
+|===
+*Tipo di elaborazione*
+
+Asincrono
+
+Usa il seguente URI in Swagger:
+
+[listing]
+----
+curl  -X PATCH  `\https://xx.xx.xx.xx:8443/virtualization/api/v1/vcenters/<vcenter_id>/migration-jobs/<migration_id>`
+----
+*Esempio di Curl*
+
+[listing]
+----
+curl  -X PATCH  `\https://xx.xx.xx.xx:8443/virtualization/api/v1/vcenters/56d373bd-4163-44f9-a872-9adabb008ca9/migration-jobs/d50073ce-35b4-4c51-9d2e-4ce66f802c35`
+----
+*Esempio di output JSON*
+
+[listing]
+----
+{
+  "id": 123,
+  "migration_id": "d50073ce-35b4-4c51-9d2e-4ce66f802c35",
+  "status": "running"
+}
+----
+====
++
+
+NOTE: Utilizzare il valore 'migration_id' restituito nel passaggio 7 come <migration_id> nella chiamata API PATCH. Il corpo della richiesta è vuoto per l'operazione di patch.
+
++
+
+NOTE: UUID è l'UUID della migrazione restituito in risposta all'API post-migrate.
+
+
+
+Dopo aver eseguito l'API di migrazione delle patch, tutte le VM sono conformi alla storage policy.
+
+.Cosa c'è dopo
+Dopo aver completato la migrazione e registrato ONTAP tools 10.5 sul vCenter Server, segui questi passaggi:
+
+* Attendi il completamento della fase di *Rilevamento* e il sistema aggiorna automaticamente i certificati su tutti gli host.
+* Attendi prima di avviare le operazioni su datastore e macchine virtuali. Il tempo di attesa dipende dal numero di host, datastore e macchine virtuali. Se non attendi, potresti vedere errori occasionali.
+
+
+Dopo l'aggiornamento, se lo stato di conformità della macchina virtuale non è aggiornato, riapplica il criterio di storage seguendo questi passaggi:
+
+. Vai al datastore e seleziona *Riepilogo* > *Criteri di archiviazione VM*.
+. Il sistema mostra lo stato di conformità sotto *VM storage policy compliance* come *Out-of-date*.
+. Seleziona il criterio Storage VM e la VM corrispondente.
+. Seleziona *Applica*.
+. Lo stato di conformità in *Conformità ai criteri di storage delle VM* risulta conforme.
+
+
+.Informazioni correlate
+* link:../concepts/rbac-learn-about.html["Scopri gli strumenti ONTAP per VMware vSphere 10 RBAC"]
+* link:../upgrade/upgrade-ontap-tools.html["Aggiorna da ONTAP tools for VMware vSphere 10.x a 10.5"]
+
+
+
+
+[[steps-to-update-the-storage-replication-adapter-sra]]
+== Procedura per aggiornare l'adattatore di replica dello storage (SRA)
+
+.Prima di iniziare
+Nel piano di recovery, il sito protetto si riferisce alla posizione in cui le VM sono attualmente in esecuzione, mentre il sito di recovery è la posizione in cui le VM verranno recuperate. L'interfaccia dell'appliance VMware Live Site Recovery visualizza lo stato del piano di recovery con dettagli sui siti protetto e di recovery. Nel piano di recovery, i pulsanti CLEANUP e REPROTECT sono disabilitati, mentre i pulsanti TEST e RUN restano abilitati. Questo indica che il sito è pronto per recovery di dati. Prima di migrare l'SRA, verifica che un sito sia nello stato protetto e l'altro nello stato di recovery.
+
+
+NOTE: Non avviare la migrazione se il failover è stato completato ma la riprotezione è in sospeso. Assicurarsi che il processo di riprotezione sia completato prima di procedere con la migrazione. Se è in corso un failover di prova, terminarlo e avviare la migrazione.
+
+. Segui questi passaggi per eliminare l'adattatore ONTAP tools SRA per VMware vSphere 9.xx in VMware Site Recovery:
+. Accedere alla pagina di gestione della configurazione di VMware Live Site Recovery.
++
+.. Vai alla sezione *Storage Replication Adapter*.
+.. Dal menu con i tre puntini seleziona *Ripristina configurazione*.
+.. Dal menu con i puntini di sospensione seleziona *Cancella*.
+
+
+. Esegui questi passaggi sia sul sito di protezione che su quello di recovery.
++
+.. link:../manage/enable-services.html["Abilita i servizi di ONTAP tools per VMware vSphere"]
+.. Configura ONTAP tools for VMware vSphere 10.5 SRA adapter seguendo i passaggi in link:../protect/configure-on-srm-appliance.html["Configura SRA sull'appliance VMware Live Site Recovery"].
+.. Nell'interfaccia di VMware Live Site Recovery, esegui *Rileva array* e *Rileva dispositivi*. Conferma che i dispositivi vengano visualizzati come prima della migrazione.
+
+
+

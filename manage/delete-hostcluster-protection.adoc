@@ -1,0 +1,28 @@
+---
+permalink: manage/delete-hostcluster-protection.html 
+sidebar: sidebar 
+keywords: vVols datastore,delete vVol 
+summary: Quando rimuovi la protezione del cluster host, i datastore diventano non protetti. 
+---
+= Rimuovere la protezione del cluster host negli ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando rimuovi la protezione del cluster host, i datastore diventano non protetti.
+
+.Passaggi
+. Per visualizzare l'elenco dei cluster host protetti, vai su *NetApp ONTAP tools* > *Protection* > *Host cluster relationships*.
++
+In questa pagina è possibile monitorare i cluster host protetti, lo stato di protezione, la relazione di SnapMirror e lo stato. Selezionare i gruppi di coerenza per visualizzare la capacità, i datastore associati e i gruppi secondari.
+
+. Nella finestra *Protezione cluster host*, seleziona il menu con i puntini di sospensione accanto al cluster e seleziona *Rimuovi protezione*.
++
+** Se rimuovi la protezione da un cluster host con solo una relazione SnapMirror asincrona, devi eliminare manualmente gli elementi di storage. Gli elementi di storage includono gruppi di coerenza, volumi (per sistemi ONTAP), unità di storage (LUN) e snapshot.
+** Se rimuovi la protezione da un cluster host con solo una relazione di policy SnapMirror basata su failover automatico duplex e un gruppo di coerenza non gerarchico, puoi eliminare gli elementi di storage associati sullo storage secondario direttamente dalla stessa schermata.
+** Se rimuovi la protezione da un cluster host con sia criteri SnapMirror che un gruppo di coerenza gerarchica per i backup, viene visualizzato un avviso relativo all'impatto sui backup. Conferma per procedere. Dopo la conferma, elimina gli elementi di storage associati sullo storage secondario. Se non esegui la pulizia, gli elementi di storage rimangono sul sito secondario.
+
+
+

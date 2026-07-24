@@ -1,0 +1,191 @@
+---
+permalink: deploy/deployment-error-codes.html 
+sidebar: sidebar 
+keywords: upgrade 
+summary: Questa pagina descrive i codici di errore per le operazioni di distribuzione, riavvio e ripristino di ONTAP tools for VMware vSphere system. 
+---
+= Risolvi gli errori di distribuzione degli ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se riscontri problemi di distribuzione, controlla i log e i codici di errore per diagnosticare e risolvere i problemi. A partire da ONTAP tools for VMware vSphere 10.5, i pacchetti di log raccolti dai pod includono i log di MongoDB, RabbitMQ e Vault, insieme allo stato e alle descrizioni di tutti i pod. Questi vengono forniti in aggiunta ai log di servizio ONTAP tools for VMware vSphere esistenti, migliorando la supportabilità e la risoluzione dei problemi.
+
+
+
+[[collect-the-log-files]]
+== Raccogli i file di log
+
+È possibile raccogliere i file di registro per ONTAP tools for VMware vSphere dalle opzioni disponibili nell'interfaccia utente di ONTAP tools Manager. Il supporto tecnico potrebbe chiedere di raccogliere i file di registro per aiutare a risolvere un problema.
+
+
+NOTE: La generazione dei log da ONTAP tools Manager include tutti i log per tutte le istanze del server vCenter. La generazione dei log dall'interfaccia utente client vCenter è limitata al server vCenter selezionato.
+
+.Passaggi
+. Avvia ONTAP tools Manager da un browser web: `\https://<ONTAPtoolsIP>:8443/virtualization/ui/`
+. Accedi con le credenziali di amministratore degli ONTAP tools for VMware vSphere che hai fornito durante la distribuzione.
+. Seleziona *Log Bundles* dalla barra laterale.
++
+Questa operazione può richiedere diversi minuti.
+
+. Seleziona *Genera* per generare i file di log.
+. Inserisci l'etichetta per il pacchetto di log e seleziona *Genera*.
++
+Scarica il file tar.gz e invialo al supporto tecnico.
+
+
+
+Segui i passaggi seguenti per generare il pacchetto di log utilizzando l'interfaccia utente del client vCenter:
+
+.Passaggi
+. Accedi al vSphere client.
+. Dalla home page del client vSphere, vai su *Supporto* > *Log bundle* > *Genera*.
+. Fornisci l'etichetta del pacchetto di log e genera il pacchetto di log. Puoi vedere l'opzione di download quando i file sono stati generati. Il download potrebbe richiedere un po' di tempo.
+
+
+
+NOTE: Il pacchetto di log generato sostituisce il pacchetto di log generato negli ultimi 3 giorni o 72 ore.
+
+
+
+[[deployment-error-codes]]
+== Codici di errore di distribuzione
+
+Potresti incontrare codici di errore durante la distribuzione, il riavvio e le operazioni di ripristino degli ONTAP tools for VMware vSphere. I codici di errore sono composti da cinque cifre: le prime due rappresentano lo script che ha riscontrato il problema e le ultime tre rappresentano il flusso di lavoro specifico all'interno di quello script.
+
+Tutti i log degli errori vengono registrati nel file ansible-perl-errors.log nella directory /var/log per facilitare l'individuazione e la risoluzione dei problemi. Questo file di log contiene il codice di errore e l'attività Ansible non riuscita.
+
+
+NOTE: I codici di errore riportati in questa pagina sono solo a scopo di riferimento. Contatta il team di supporto se l'errore persiste o se non viene indicata alcuna soluzione.
+
+La tabella seguente elenca i codici di errore e i corrispondenti nomi dei file.
+
+|===
+
+
+| *Codice di errore* | *Nome script* 
+
+
+| 00 | firstboot-network-config.pl, modalità deploy 
+
+
+| 01 | firstboot-network-config.pl, modalità upgrade 
+
+
+| 02 | firstboot-inputs-validation.pl 
+
+
+| 03 | firstboot-deploy-otv-ng.pl, deploy, HA 
+
+
+| 04 | firstboot-deploy-otv-ng.pl, deploy, non-HA 
+
+
+| 05 | firstboot-deploy-otv-ng.pl, reboot 
+
+
+| 06 | firstboot-deploy-otv-ng.pl, aggiornamento, HA 
+
+
+| 07 | firstboot-deploy-otv-ng.pl, aggiornamento, non-HA 
+
+
+| 08 | firstboot-otv-recovery.pl 
+
+
+| 09 | post-deploy-upgrade.pl 
+|===
+Le ultime tre cifre del codice di errore indicano lo specifico errore del flusso di lavoro all'interno dello script:
+
+|===
+
+
+| *Codice errore di deployment* | *Flusso di lavoro* | *Risoluzione* 
+
+
+| 049 | Per la rete e la convalida, lo script perl li assegnerà a breve | - 
+
+
+| 050 | Generazione della chiave SSH non riuscita | Riavvia la macchina virtuale (VM) primaria. 
+
+
+| 053 | Installazione di RKE2 non riuscita | Esegui i seguenti comandi e riavvia la VM principale oppure ridistribuisci: sudo rke2-killall.sh (su tutte le VM) sudo rke2-uninstall.sh (su tutte le VM). 
+
+
+| 054 | Impostazione di kubeconfig non riuscita | Ridistribuisci 
+
+
+| 055 | Impossibile distribuire il registry | Se il pod del registry è presente, attendi che il pod sia pronto e quindi riavvia la VM primaria oppure esegui una nuova distribuzione. 
+
+
+| 059 | KubeVip implementazione non riuscita | Assicurarsi che l'indirizzo IP virtuale per il piano di controllo di Kubernetes e l'indirizzo IP degli ONTAP tools forniti durante la distribuzione appartengano alla stessa VLAN e siano indirizzi IP liberi. Riavviare se tutti i punti precedenti sono corretti. Altrimenti, ridistribuire. 
+
+
+| 060 | L'implementazione dell'operatore non è riuscita | Riavvia 
+
+
+| 061 | L'implementazione dei servizi non è riuscita | Esegui il debug di base di Kubernetes, come get pods, get rs, get svc e così via, nel namespace ntv-system per maggiori dettagli e log degli errori su /var/log/ansible-perl-errors.log e /var/log/ansible-run.log e poi ridistribuisci. 
+
+
+| 062 | La distribuzione dei servizi ONTAP tools non è riuscita | Consulta i log degli errori in /var/log/ansible-perl-errors.log per ulteriori dettagli e ridistribuisci. 
+
+
+| 065 | L'URL della pagina Swagger non è raggiungibile | Ridistribuisci 
+
+
+| 066 | I passaggi post-distribuzione per il certificato gateway non sono riusciti  a| 
+Per ripristinare/completare l'upgrade, procedi come segue:
+
+* Abilita la shell diagnostica.
+* Eseguire il comando 'sudo perl /home/maint/scripts/post-deploy-upgrade.pl --postDeploy'.
+* Controlla i log in /var/log/post-deploy-upgrade.log.
+
+
+
+
+| 088 | Configurare la rotazione dei log per journald non è riuscito | Verifica che le impostazioni di rete della macchina virtuale siano compatibili con l'host su cui è ospitata. Puoi provare a migrare su un altro host e riavviare la macchina virtuale. 
+
+
+| 089 | Modificare la proprietà del file di configurazione della rotazione del registro di riepilogo non è riuscito | Riavvia la macchina virtuale principale. 
+
+
+| 096 | Installa il provisioner di archiviazione dinamica | - 
+
+
+| 108 | Script di seeding non riuscito | - 
+
+
+| 114 | Aggiornamento interno del certificato nella collezione MongoDB non riuscito  a| 
+Se la distribuzione non riesce con il codice di errore 114, completare i seguenti passaggi:
+
+* Abilita la shell diagnostica.
+* Eseguire il seguente comando: `sudo perl /home/maint/scripts/post-deploy-upgrade.pl --internal_cert_update_collection`
+* Esamina i registri a `/var/log/otvng/post-deploy-upgrade.log`
+
+
+|===
+|===
+
+
+| *Codice di errore di riavvio* | *Flusso di lavoro* | *Risoluzione* 
+
+
+| 067 | Attesa per rke2-server scaduta. | - 
+
+
+| 101 | Impossibile reimpostare la password dell'utente manutenzione/console. | - 
+
+
+| 102 | Impossibile eliminare il file delle password durante il reset della password utente Maint/Console. | - 
+
+
+| 103 | Impossibile aggiornare la password del nuovo utente Maint/Console nel vault. | - 
+
+
+| 088 | La configurazione della rotazione dei log per journald non è riuscita. | Verifica che le impostazioni di rete della macchina virtuale siano compatibili con l'host su cui è ospitata. Puoi provare a migrare su un altro host e riavviare la macchina virtuale. 
+
+
+| 089 | La modifica della proprietà del file di configurazione di rotazione del log di riepilogo non è riuscita. | Riavvia la macchina virtuale. 
+|===

@@ -1,0 +1,107 @@
+---
+permalink: manage/storage-backend.html 
+sidebar: sidebar 
+keywords:  
+summary: 'I backend di archiviazione sono i sistemi che gli host ESXi utilizzano per l"archiviazione dei dati.' 
+---
+= Gestire i backend di storage in ONTAP tools
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+I backend di archiviazione sono i sistemi che gli host ESXi utilizzano per l'archiviazione dei dati.
+
+
+
+[[discover-storage]]
+== Scopri lo storage
+
+Puoi eseguire il rilevamento di un backend di storage su richiesta senza attendere un rilevamento pianificato, così da aggiornare immediatamente i dettagli dello storage. Per le configurazioni MetroCluster, esegui manualmente la discovery degli ONTAP tools dopo uno switchover.
+
+Segui i passaggi seguenti per scoprire i backend di archiviazione.
+
+.Passaggi
+. Accedi al vSphere client.
+. Nella pagina dei collegamenti rapidi, seleziona *NetApp ONTAP tools* nella sezione dei plug-in.
+. Nel riquadro sinistro di ONTAP tools, vai su *Storage Backends* e seleziona un storage backend.
+. Seleziona il menu con i tre puntini verticali e seleziona *Discover storage*
+
+
+Puoi monitorare l'avanzamento nel pannello delle attività recenti.
+
+
+
+[[modify-storage-backends]]
+== Modifica i backend di archiviazione
+
+Puoi modificare le credenziali del backend di storage o il nome della porta. Puoi anche modificare il backend di storage per i cluster ONTAP globali usando ONTAP tools Manager. Se il certificato scade tra 30 giorni o meno, ONTAP tools mostra un avviso. Modifica il backend di storage e carica il nuovo certificato dall'amministratore ONTAP.
+
+Quando modifichi il backend di archiviazione, ONTAP tools for VMware vSphere esegue una scoperta del backend di archiviazione per aggiornare i dettagli di archiviazione.
+
+Segui i passaggi in questa sezione per modificare un backend di archiviazione.
+
+. Accedi al vSphere client.
+. Nella pagina dei collegamenti rapidi, seleziona *NetApp ONTAP tools* nella sezione dei plug-in.
+. Nel riquadro sinistro di ONTAP tools, vai su *Storage Backends* e seleziona un storage backend.
+. Seleziona il menu con i tre puntini verticali e seleziona *Modifica* per modificare le credenziali o il nome della porta. Puoi monitorare l'avanzamento nel pannello delle attività recenti.
+
+
+Modifica i cluster ONTAP globali con ONTAP tools Manager come segue.
+
+. Avvia ONTAP tools Manager da un browser web: `\https://<ONTAPtoolsIP>:8443/virtualization/ui/`
+. Accedi con le credenziali di amministratore degli ONTAP tools for VMware vSphere che hai fornito durante la distribuzione.
+. Seleziona i backend di archiviazione dalla barra laterale.
+. Seleziona il backend di archiviazione che vuoi modificare.
+. Seleziona il menu con le ellissi verticali e seleziona *Modifica*.
+. Puoi modificare le credenziali o la porta. Inserisci *Username* e *Password* per modificare il backend di storage.
+
+
+
+
+[[remove-storage-backends]]
+== Rimuovi i backend di storage
+
+Devi rimuovere tutti i datastore collegati al backend di storage prima di rimuoverlo. Segui i passaggi qui sotto per rimuovere un backend di storage.
+
+. Accedi al vSphere client.
+. Nella pagina dei collegamenti rapidi, seleziona *NetApp ONTAP tools* nella sezione dei plug-in.
+. Nel riquadro sinistro di ONTAP tools, vai su *Storage Backends* e seleziona un storage backend.
+. Seleziona il menu con i tre puntini verticali e scegli *Rimuovi*. Assicurati che il backend di storage non contenga alcun datastore. Puoi monitorare l'avanzamento nel pannello delle attività recenti.
+
+
+È possibile rimuovere i cluster ONTAP globali utilizzando ONTAP tools Manager.
+
+. Avvia ONTAP tools Manager da un browser web: `\https://<ONTAPtoolsIP>:8443/virtualization/ui/`
+. Accedi con le credenziali di amministratore degli ONTAP tools for VMware vSphere che hai fornito durante la distribuzione.
+. Seleziona *Storage Backends* dalla barra laterale.
+. Seleziona il backend di storage che vuoi rimuovere
+. Seleziona il menu con i puntini di sospensione verticali e seleziona *Rimuovi*.
+
+
+
+
+[[drill-down-view-of-storage-backend]]
+== Analisi dettagliata del backend di storage
+
+La pagina dei backend di archiviazione elenca tutti i backend di archiviazione. Puoi eseguire operazioni di individuazione dello storage, modifica e rimozione sui backend di archiviazione che hai aggiunto, ma non sulle singole SVM figlie all'interno del cluster.
+
+Seleziona il cluster padre o figlio per visualizzare il riepilogo dei componenti. Per il cluster padre, usa il menu a discesa delle azioni per individuare lo storage, modificarlo o rimuovere il backend di storage.
+
+La pagina di riepilogo fornisce i seguenti dettagli:
+
+* Stato del backend di storage
+* Informazioni sulla capacità
+* Informazioni di base sulla macchina virtuale
+* Dettagli del certificato come lo stato del certificato e la data di scadenza.
+* Informazioni di rete come l'indirizzo IP e la porta della rete. Per la SVM figlia, le informazioni sono le stesse del backend di storage padre.
+* Privileges consentiti e limitati per il backend di storage. Per la SVM figlia, le informazioni sono le stesse del backend di storage padre. ONTAP tools visualizza i privilegi solo sui backend di storage basati su cluster. Se si aggiunge SVM come backend di storage, le informazioni sui privilegi non vengono visualizzate.
+* La vista di dettaglio del cluster di sistema ASA r2 non include la scheda dei livelli locali quando la proprietà disaggregata è impostata su "true" per l'SVM o il cluster.
+* Per i sistemi ASA r2 SVM, il portlet della capacità non viene visualizzato. Il portlet della capacità è necessario solo quando la proprietà disaggregata è impostata su "true" per l'SVM o il cluster.
+* Per i sistemi ASA r2 SVM, la sezione con le informazioni di base mostra il tipo di piattaforma.
+
+
+La scheda Interfaccia fornisce informazioni dettagliate sull'interfaccia.
+
+La scheda "Livelli locali" fornisce informazioni dettagliate sull'elenco degli aggregati.

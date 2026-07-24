@@ -1,0 +1,36 @@
+---
+section: protect
+title: Proteggi i datastore e le macchine virtuali
+entries:
+- title: Proteggi usando la protezione del cluster host
+  url: "/configure/protect-cluster.html"
+- title: Proteggi usando la protezione SRA
+  entries:
+  - title: Configura SRA per proteggere i datastore
+    url: "/protect/enable-storage-replication-adapter.html"
+  - title: Configura SRA per ambienti SAN e NAS
+    url: "/protect/configure-storage-replication-adapter-for-san-environment.html"
+  - title: Configura SRA per ambienti altamente scalabili
+    url: "/protect/configure-storage-replication-adapter-for-highly-scaled-environment.html"
+  - title: Configura SRA sull'appliance VMware Live Site Recovery
+    url: "/protect/configure-on-srm-appliance.html"
+  - title: Aggiorna le credenziali SRA
+    url: "/protect/update-credentials.html"
+  - title: Configura i siti protetti e di ripristino
+    url: "/protect/configure-protection-groups.html"
+  - title: Configura le risorse del sito protetto e del sito di ripristino
+    entries:
+    - title: Configura le mappature di rete
+      url: "/protect/map-network.html"
+    - title: Configura le mappature delle cartelle
+      url: "/protect/map-folder.html"
+    - title: Configura le mappature delle risorse
+      url: "/protect/map-resource.html"
+    - title: Configura i datastore segnaposto
+      url: "/protect/configure-placeholder-datastores.html"
+    - title: Configura SRA usando il gestore array
+      url: "/protect/configure-array-manager.html"
+  - title: Verifica i sistemi di archiviazione replicati
+    url: "/protect/verify-the-replicated-storage-environment.html"
+  - title: Protezione a ventaglio
+    url: "/protect/fan-out-protection.html"
