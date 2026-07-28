@@ -28,7 +28,7 @@ Puoi accedere agli ONTAP tools for VMware vSphere 10 REST API tramite l'indirizz
 * Indirizzo IP e porta di ONTAP tools
 * Versione API
 * Categoria di risorse
-* ${post_edited_translations.segment}
+* Risorsa specifica
 
 
 Devi configurare l'indirizzo IP durante la configurazione iniziale, mentre la porta rimane fissa a 8443. La prima parte dell'URL è la stessa per ogni istanza di ONTAP tools for VMware vSphere 10; solo la categoria di risorsa e la risorsa specifica cambiano tra gli endpoint.

@@ -72,7 +72,6 @@
   <block id="2380e443be52c3a8babdac8a3660044f" category="list-text">Indirizzo IP e porta di ONTAP tools</block>
   <block id="7d1d9327371097419bdf83ffa671d2f2" category="list-text">Versione API</block>
   <block id="bbf5c9c73b20bfa79e158e8eeb77c470" category="list-text">Categoria di risorse</block>
-  <block id="e6e84e4970cb2f91fac914024e7baf80" category="list-text">${post_edited_translations.segment}</block>
   <block id="80fc4e7f765f5ad9941a9120af4f8556" category="paragraph">Devi configurare l'indirizzo IP durante la configurazione iniziale, mentre la porta rimane fissa a 8443. La prima parte dell'URL è la stessa per ogni istanza di ONTAP tools for VMware vSphere 10; solo la categoria di risorsa e la risorsa specifica cambiano tra gli endpoint.</block>
   <block id="2b8e805ca5043f79e7d7895b37f35f24" category="admonition">Gli indirizzi IP e i valori delle porte negli esempi seguenti sono solo a scopo illustrativo. Devi modificare questi valori per il tuo ambiente.</block>
   <block id="d66885731813874c4dabe678de135836" category="paragraph-title">Esempio di accesso ai servizi di autenticazione</block>
@@ -2793,4 +2792,5 @@
   <block id="0198d63c7755c98e755c41135f163c6e" category="admonition">Quando aggiungi un nuovo host ESXi usando <block ref="94f03a61d7283013b50d8cc8e88c9fd8" category="inline-link-rx"></block>, aspetta che il rilevamento host pianificato sia completato prima che venga visualizzato in ONTAP tools. In alternativa, puoi avviare manualmente il rilevamento dalla schermata di panoramica di NetApp ONTAP tools.</block>
   <block id="ea979d9a9cddfcb001c2c7866c21bc62" category="list-text">Per spostarli in un archivio dati non gestito, consulta <block ref="94f03a61d7283013b50d8cc8e88c9fd8" category="inline-link-rx"></block>.</block>
   <block id="0d6a516cbc9843091cd9c8296dc35933" category="paragraph">Per informazioni sulla gestione degli snapshot delle macchine virtuali, consultare la documentazione Broadcom<block ref="94f03a61d7283013b50d8cc8e88c9fd8" category="inline-link-rx"></block>.</block>
+  <block id="e6e84e4970cb2f91fac914024e7baf80" category="list-text">Risorsa specifica</block>
 </blocks>
