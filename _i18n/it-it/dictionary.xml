@@ -2790,7 +2790,7 @@
   <block id="ae0aa1a81eb18e69d5fc662eaee0efd5" category="inline-link">Documentazione Tecnica Broadcom</block>
   <block id="563c4e1f66ab33a447a910bcffd17163" category="list-text">Aggiungi un host al tuo cluster VMware vSphere seguendo il flusso di lavoro nella pagina:<block ref="94f03a61d7283013b50d8cc8e88c9fd8" category="inline-link-rx"></block>.</block>
   <block id="25dd3bcdfcb6b9d575ac5762e2ba9e45" category="paragraph">Per informazioni sulla migrazione delle macchine virtuali, consulta la documentazione Broadcom:<block ref="94f03a61d7283013b50d8cc8e88c9fd8" category="inline-link-rx"></block>.</block>
-  <block id="34d41a9c2e986b31767bde5da0256754" category="paragraph">Per informazioni sulla gestione degli snapshot delle macchine virtuali, consulta la documentazione Broadcom su https://techdocs.broadcom.com/[Broadcom Technical Documentation^].</block>
   <block id="0198d63c7755c98e755c41135f163c6e" category="admonition">Quando aggiungi un nuovo host ESXi usando <block ref="94f03a61d7283013b50d8cc8e88c9fd8" category="inline-link-rx"></block>, aspetta che il rilevamento host pianificato sia completato prima che venga visualizzato in ONTAP tools. In alternativa, puoi avviare manualmente il rilevamento dalla schermata di panoramica di NetApp ONTAP tools.</block>
   <block id="ea979d9a9cddfcb001c2c7866c21bc62" category="list-text">Per spostarli in un archivio dati non gestito, consulta <block ref="94f03a61d7283013b50d8cc8e88c9fd8" category="inline-link-rx"></block>.</block>
+  <block id="0d6a516cbc9843091cd9c8296dc35933" category="paragraph">Per informazioni sulla gestione degli snapshot delle macchine virtuali, consultare la documentazione Broadcom<block ref="94f03a61d7283013b50d8cc8e88c9fd8" category="inline-link-rx"></block>.</block>
 </blocks>
