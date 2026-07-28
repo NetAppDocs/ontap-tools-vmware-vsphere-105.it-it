@@ -27,7 +27,7 @@ ONTAP tools for VMware vSphere supportano tutti i principali tipi di migrazione 
 
 Se si migra una macchina virtuale su un volume FlexVol diverso, il sistema aggiorna il file di metadati di tale volume con le informazioni della macchina virtuale. Se una macchina virtuale viene migrata su un host ESXi diverso ma sullo stesso storage, il file di metadati del volume FlexVol sottostante non verrà modificato.
 
-Per informazioni sulla migrazione delle macchine virtuali, consultare la documentazione Broadcom: https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/9-0/vcenter-and-host-management/migrating-virtual-machines-host-management.html["vSphere Migrazione di macchine virtuali"]
+Per informazioni sulla migrazione delle macchine virtuali, consulta la documentazione Broadcom: https://techdocs.broadcom.com/["Documentazione Tecnica Broadcom"^].
 
 
 
@@ -70,4 +70,4 @@ NOTE: Gli snapshot di memoria catturano lo stato della memoria in esecuzione e b
 
 Nei sistemi di storage ASA r2, il comportamento degli snapshot delle macchine virtuali differisce da quello di altri tipi di storage. Gli snapshot sono di sola lettura. Quando si accende la macchina virtuale, VASA Provider crea una LUN dallo snapshot di sola lettura e abilita le IOPS. Quando si spegne la macchina virtuale, VASA Provider elimina la LUN e disabilita le IOPS.
 
-Per informazioni sulla gestione degli snapshot delle macchine virtuali, consultare la documentazione Broadcom https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/9-0/vsphere-virtual-machine-administration/managing-virtual-machinesvsphere-vm-admin/using-snapshots-to-manage-virtual-machinesvsphere-vm-admin.html["Gestire le macchine virtuali con gli snapshot"].
+Per informazioni sulla gestione degli snapshot delle macchine virtuali, consulta la documentazione Broadcom su https://techdocs.broadcom.com/[Broadcom Technical Documentation^].

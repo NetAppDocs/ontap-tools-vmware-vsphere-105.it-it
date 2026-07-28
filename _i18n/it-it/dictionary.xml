@@ -1413,8 +1413,6 @@
   <block id="622ebf1679f52188783e45799f3b70cb" category="summary">Aggiungi nuovi host VMware vSphere agli ONTAP tools for VMware vSphere.</block>
   <block id="0ac728ad45cd796f59a906aace6dbc78" category="doc">Aggiungere host VMware vSphere a ONTAP tools</block>
   <block id="a8626caa71cb3c13de333ded9fdfe5a8" category="paragraph">Aggiungi nuovi host VMware vSphere agli ONTAP tools for VMware vSphere per gestire e proteggere i datastore sugli host.</block>
-  <block id="020968a073f2c7584ecd5aaec97f88b0" category="inline-link">Come aggiungere un host ESX al cluster vSphere utilizzando il flusso di lavoro Quickstart</block>
-  <block id="0fdc03dfada440fcb45b31a6944bd23f" category="list-text">Aggiungi un host al tuo cluster vSphere seguendo la procedura descritta nella pagina:<block ref="cf7664c28a8bbe5a872742d0c68a4d4b" category="inline-link-rx"></block></block>
   <block id="9764e14a69d1669b765a8ac58a35d864" category="list-text">Dopo aver aggiunto l'host, vai al menu principale di ONTAP tools e seleziona *Discover* nel pannello Overview. Attendi che il processo di discovery sia terminato. In alternativa, puoi aspettare che il discovery host pianificato sia completato.</block>
   <block id="c81c266dd6001708c9f3076ddf21214c" category="paragraph">Il nuovo host è ora rilevato e gestito da ONTAP tools for VMware vSphere. Puoi procedere a gestire il datastore sul nuovo host.</block>
   <block id="9d7e0542459b60f98e1d8529e2c87e4e" category="list-title">Argomenti correlati</block>
@@ -1867,8 +1865,6 @@
   <block id="5ac4d5ad38058a75eea380aef0d5b92d" category="list-text">Un datastore compatibile diverso sullo stesso host ESXi</block>
   <block id="8a84a9b3823e5b795d30b91a078f4200" category="list-text">Un datastore compatibile diverso su un host ESXi diverso</block>
   <block id="2f2ca6922f453e226a4afba0efe36f5b" category="paragraph">Se si migra una macchina virtuale su un volume FlexVol diverso, il sistema aggiorna il file di metadati di tale volume con le informazioni della macchina virtuale. Se una macchina virtuale viene migrata su un host ESXi diverso ma sullo stesso storage, il file di metadati del volume FlexVol sottostante non verrà modificato.</block>
-  <block id="1c78e2c23ce0d70458073d3b0e804ecc" category="inline-link">vSphere Migrazione di macchine virtuali</block>
-  <block id="08f6951026ca8e50937f88146071f31e" category="paragraph">Per informazioni sulla migrazione delle macchine virtuali, consultare la documentazione Broadcom:<block ref="4b5c35631716e98d7e626801d9fad688" category="inline-link-rx"></block></block>
   <block id="885174fe1c59863207b1caa855941610" category="section-title">Clona le macchine virtuali protette</block>
   <block id="5fffbf2fea252f0535c4bf75d67805e3" category="paragraph">Puoi clonare macchine virtuali protette nei seguenti:</block>
   <block id="d33647394e2a97fc177b51afa0c41585" category="list-text">Lo stesso container dello stesso FlexVol volume utilizzando un gruppo di replica</block>
@@ -1887,13 +1883,9 @@
   <block id="3edc34644d8bb24743287155f8336dd1" category="paragraph">È possibile creare snapshot coerenti con gli arresti anomali (snapshot senza stato della memoria, utilizzabili per riavviare la macchina virtuale in uno stato coerente) su tutti i tipi di datastore supportati. Sono supportati anche gli snapshot quiescenti, che utilizzano VMware Tools per scrivere i dati in memoria su disco prima dell'acquisizione. Per una panoramica dei tipi di snapshot e del loro comportamento, consultare <block ref="f413ab8a4a01913fd9dc740667ceb9a3" category="inline-link-rx"></block>.</block>
   <block id="4ca168cd5422d86ae02e0150146818c6" category="admonition">Gli snapshot di memoria catturano lo stato della memoria in esecuzione e bloccano temporaneamente la macchina virtuale. Non sono supportati nei workflow degli ONTAP tools. Se una macchina virtuale dispone di uno snapshot di memoria, è necessario eliminarlo prima che la macchina virtuale possa essere inclusa in un gruppo di coerenza o in una relazione di cluster host gestita dagli ONTAP tools.</block>
   <block id="a6dfe44f5c26ee3ec5e4275783b3873f" category="paragraph">Nei sistemi di storage ASA r2, il comportamento degli snapshot delle macchine virtuali differisce da quello di altri tipi di storage. Gli snapshot sono di sola lettura. Quando si accende la macchina virtuale, VASA Provider crea una LUN dallo snapshot di sola lettura e abilita le IOPS. Quando si spegne la macchina virtuale, VASA Provider elimina la LUN e disabilita le IOPS.</block>
-  <block id="22cc0668c6bda3d1c1aa2f8059fba974" category="inline-link">Gestire le macchine virtuali con gli snapshot</block>
-  <block id="993612df9e7e6b4ae1480f4b1082805b" category="paragraph">Per informazioni sulla gestione degli snapshot delle macchine virtuali, consultare la documentazione Broadcom<block ref="26787598a32c0b6e75a5e6887328ed87" category="inline-link-rx"></block>.</block>
   <block id="3f95368adb4475e89e1f4206049b54ad" category="summary">Puoi montare un datastore VMware Virtual Volumes (vVols) su uno o più host aggiuntivi utilizzando la finestra di dialogo Mount vVols Datastore. Montare il datastore fornisce accesso allo storage a host aggiuntivi. Puoi smontare il datastore vVols solo tramite le API.</block>
   <block id="3299a7d360dc51186b4ee8c200627b3f" category="doc">Montare un datastore vVols negli ONTAP tools</block>
   <block id="8ac8af3fafb018169f82c906bf521ceb" category="paragraph">Puoi montare un datastore VMware Virtual Volumes (vVols) su uno o più host aggiuntivi per fornire accesso allo storage ad altri host. Puoi smontare il datastore vVols solo tramite le API.</block>
-  <block id="77320a87e6ca763456023daeede0729f" category="inline-link">Aggiungi un host ESX al workflow del tuo cluster vSphere</block>
-  <block id="91d42183cd7455cc3f88c0c77b61174e" category="admonition">Quando aggiungi un nuovo host ESXi usando <block ref="4954232b8967f3dbfaee01742ae35b89" category="inline-link-rx"></block>, aspetta che il rilevamento host pianificato sia completato prima che venga visualizzato in ONTAP tools. In alternativa, puoi avviare manualmente il rilevamento dalla schermata di panoramica di NetApp ONTAP tools.</block>
   <block id="011c7edf1e9f3c93cbdd438d0b9298d1" category="list-text">Fai clic con il pulsante destro del mouse sul datastore e seleziona *NetApp ONTAP tools* &gt; *Monta datastore*.</block>
   <block id="6ca1f41f9b51c9451c86fc8719b6b18d" category="list-text">Nella finestra di dialogo *Monta datastore sugli host*, seleziona gli host sui quali desideri montare il datastore, quindi seleziona *Monta*.</block>
   <block id="ba8e3bf168d21be1baf9d641e008977f" category="paragraph">Il pannello delle attività recenti mostra lo stato di avanzamento.</block>
@@ -2115,8 +2107,6 @@
   <block id="f54e212052df635bcc70d25302fd583e" category="paragraph">La disinstallazione di ONTAP tools for VMware vSphere elimina tutti i dati negli strumenti.</block>
   <block id="82a00fc1c0ae6d437f6d942c64bee898" category="list-text">Rimuovi o sposta tutte le macchine virtuali dai datastore gestiti da ONTAP tools for VMware vSphere.</block>
   <block id="4ad237c48098cfd8973e73475bded403" category="list-text">Per rimuovere le macchine virtuali, fare riferimento a<block ref="c16fb322315174fa2c9720c74541cf45" category="inline-link-rx"></block></block>
-  <block id="59dd8a5d1e9605907341901d2760c087" category="inline-link">Come migrare la tua macchina virtuale con Storage vMotion</block>
-  <block id="0166be8b4848389c414e9e383efe9111" category="list-text">Per spostarli in un archivio dati non gestito, fare riferimento a<block ref="920cfb03e9def61d5164fb56cf050dd9" category="inline-link-rx"></block></block>
   <block id="3cd4a1ddd805e8692af529725906108e" category="inline-link-macro">Elimina i datastore</block>
   <block id="f0833ce92c23eb056dde238669740988" category="list-text"><block ref="523efdef8100699453c6b07ce8f4921c" category="inline-link-macro-rx"></block> creato su ONTAP tools for VMware vSphere.</block>
   <block id="1d920979688b28c7b10ef84d14436f95" category="list-text">Se hai abilitato il provider VASA, seleziona *Impostazioni* &gt; *Impostazioni provider VASA* &gt; *Annulla registrazione* in ONTAP tools per annullare la registrazione dei provider VASA da tutti i vCenter server.</block>
@@ -2797,4 +2787,10 @@
   <block id="5dd03e8d039863e563e049be198c3fd3" category="sidebar">Note di rilascio</block>
   <block id="dd018bb6638d4453bb4643baac23fad3" category="sidebar">Aggiorna ONTAP tools per VMware vSphere</block>
   <block id="f804f395829e966ca161a8be7756fec4" category="sidebar">Codici di errore di upgrade</block>
+  <block id="ae0aa1a81eb18e69d5fc662eaee0efd5" category="inline-link">Documentazione Tecnica Broadcom</block>
+  <block id="563c4e1f66ab33a447a910bcffd17163" category="list-text">Aggiungi un host al tuo cluster VMware vSphere seguendo il flusso di lavoro nella pagina:<block ref="94f03a61d7283013b50d8cc8e88c9fd8" category="inline-link-rx"></block>.</block>
+  <block id="25dd3bcdfcb6b9d575ac5762e2ba9e45" category="paragraph">Per informazioni sulla migrazione delle macchine virtuali, consulta la documentazione Broadcom:<block ref="94f03a61d7283013b50d8cc8e88c9fd8" category="inline-link-rx"></block>.</block>
+  <block id="34d41a9c2e986b31767bde5da0256754" category="paragraph">Per informazioni sulla gestione degli snapshot delle macchine virtuali, consulta la documentazione Broadcom su https://techdocs.broadcom.com/[Broadcom Technical Documentation^].</block>
+  <block id="0198d63c7755c98e755c41135f163c6e" category="admonition">Quando aggiungi un nuovo host ESXi usando <block ref="94f03a61d7283013b50d8cc8e88c9fd8" category="inline-link-rx"></block>, aspetta che il rilevamento host pianificato sia completato prima che venga visualizzato in ONTAP tools. In alternativa, puoi avviare manualmente il rilevamento dalla schermata di panoramica di NetApp ONTAP tools.</block>
+  <block id="ea979d9a9cddfcb001c2c7866c21bc62" category="list-text">Per spostarli in un archivio dati non gestito, consulta <block ref="94f03a61d7283013b50d8cc8e88c9fd8" category="inline-link-rx"></block>.</block>
 </blocks>

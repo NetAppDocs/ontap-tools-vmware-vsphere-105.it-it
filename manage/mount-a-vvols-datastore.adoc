@@ -14,7 +14,7 @@ summary: 'Puoi montare un datastore VMware Virtual Volumes (vVols) su uno o più
 Puoi montare un datastore VMware Virtual Volumes (vVols) su uno o più host aggiuntivi per fornire accesso allo storage ad altri host. Puoi smontare il datastore vVols solo tramite le API.
 
 
-NOTE: Quando aggiungi un nuovo host ESXi usando  https://techdocs.broadcom.com/us/en/vmware-cis/vsphere/vsphere/9-0/use-quickstart-to-add---host-to-a-cluster.html["Aggiungi un host ESX al workflow del tuo cluster vSphere"], aspetta che il rilevamento host pianificato sia completato prima che venga visualizzato in ONTAP tools. In alternativa, puoi avviare manualmente il rilevamento dalla schermata di panoramica di NetApp ONTAP tools.
+NOTE: Quando aggiungi un nuovo host ESXi usando  https://techdocs.broadcom.com/["Documentazione Tecnica Broadcom"^], aspetta che il rilevamento host pianificato sia completato prima che venga visualizzato in ONTAP tools. In alternativa, puoi avviare manualmente il rilevamento dalla schermata di panoramica di NetApp ONTAP tools.
 
 .Passaggi
 . Dalla home page del client vSphere, seleziona *Host e cluster*.
